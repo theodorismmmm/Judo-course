@@ -2,6 +2,7 @@
 
 import { useUser } from "@clerk/nextjs";
 import { useState } from "react";
+import { updateKnown } from "@/lib/known-writes";
 import { readKnown } from "@/lib/study";
 
 export function useKnown() {
@@ -22,11 +23,11 @@ export function KnownMark({ slug }: { slug: string }) {
       window.location.href = `/sign-in?redirect_url=${encodeURIComponent(here)}`;
       return;
     }
-    const current = readKnown(user.unsafeMetadata);
-    const next = on ? current.filter((item) => item !== slug) : [...current, slug];
     setPending(true);
     try {
-      await user.update({ unsafeMetadata: { ...user.unsafeMetadata, known: next } });
+      await updateKnown(user, (current) =>
+        on ? current.filter((item) => item !== slug) : current.includes(slug) ? current : [...current, slug],
+      );
     } finally {
       setPending(false);
     }

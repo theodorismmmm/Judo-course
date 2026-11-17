@@ -2,7 +2,8 @@
 
 import { useUser } from "@clerk/nextjs";
 import { useEffect, useMemo, useState } from "react";
-import { CARD_MODES, cardText, cardsFor, deal, isCardMode, readKnown, type CardMode } from "@/lib/study";
+import { updateKnown } from "@/lib/known-writes";
+import { CARD_MODES, cardText, cardsFor, deal, isCardMode, type CardMode } from "@/lib/study";
 import { SiteFooter } from "./SiteFooter";
 import { SiteHeader } from "./SiteHeader";
 
@@ -56,8 +57,7 @@ export function Flashcards() {
       window.location.href = `/sign-in?redirect_url=${encodeURIComponent("/karten")}`;
       return;
     }
-    const next = [...new Set([...readKnown(user.unsafeMetadata), ...slugs])];
-    await user.update({ unsafeMetadata: { ...user.unsafeMetadata, known: next } });
+    await updateKnown(user, (current) => [...new Set([...current, ...slugs])]);
     setNote("Diese Würfe sind abgehakt.");
   }
 
