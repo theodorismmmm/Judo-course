@@ -33,7 +33,7 @@ export function Dojo() {
   const scope = params.get("pfad") === "bis" ? "path" : "rank";
   const artParam = params.get("art");
   const art = isCategory(artParam) ? artParam : null;
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState(() => params.get("q") ?? "");
   const [lockNote, setLockNote] = useState("");
   const { isLoaded: accountLoaded, isSignedIn, known, user } = useKnown();
 

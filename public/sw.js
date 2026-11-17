@@ -1,12 +1,17 @@
-const CACHE = "judonow-v1";
+const CACHE = "judonow-v2";
 const PRECACHE = [
   "/",
   "/ueben",
   "/filme",
   "/karten",
   "/workout",
+  "/uebersicht",
   "/offline",
   "/manifest.webmanifest",
+  "/favicon.ico",
+  "/logo.png",
+  "/icons/icon-48.png",
+  "/icons/icon-96.png",
   "/icons/icon-192.png",
   "/icons/icon-512.png",
   "/icons/icon-180.png",
