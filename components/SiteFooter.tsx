@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export function SiteFooter() {
   return (
     <footer className="site-footer">
@@ -12,6 +14,13 @@ export function SiteFooter() {
       </p>
       <p>Lehrfilme laufen über YouTube. Der gezeichnete Ablauf darunter ist die Schrittfolge, wenn es keinen einzelnen Film gibt.</p>
       <p>Ein Konto merkt sich deine Ziele, deinen Gürtel und welche Würfe du schon kannst.</p>
+      <p>
+        <Link href="/uebersicht">Seitenübersicht</Link>
+        {" · "}
+        <a href="/sitemap.xml">XML-Sitemap</a>
+        {" · "}
+        <a href="/robots.txt">robots.txt</a>
+      </p>
     </footer>
   );
 }

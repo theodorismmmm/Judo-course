@@ -22,7 +22,8 @@ export function SiteHeader({ trailing }: { trailing?: ReactNode }) {
   return (
     <>
       <header className="top site-top">
-        <Link href="/" className="wordmark">
+        <Link href="/" className="wordmark brand-mark">
+          <img src="/logo.png" alt="" width={28} height={28} className="brand-logo" />
           JudoNOW
         </Link>
         <nav className="tabs desktop-tabs" aria-label="Bereiche">
