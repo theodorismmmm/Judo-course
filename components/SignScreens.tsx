@@ -10,12 +10,12 @@ function redirectTarget(fallback: string, value: string | null) {
 
 export function SignInScreen() {
   const params = useSearchParams();
-  const redirect = redirectTarget("/ueben", params.get("redirect_url"));
-  return <SignIn forceRedirectUrl={redirect} signUpUrl="/sign-up" />;
+  const redirect = redirectTarget("/starten", params.get("redirect_url"));
+  return <SignIn forceRedirectUrl={redirect} signUpUrl="/sign-up?redirect_url=%2Fstarten" />;
 }
 
 export function SignUpScreen() {
   const params = useSearchParams();
-  const redirect = redirectTarget("/ueben", params.get("redirect_url"));
-  return <SignUp forceRedirectUrl={redirect} signInUrl="/sign-in" />;
+  const redirect = redirectTarget("/starten", params.get("redirect_url"));
+  return <SignUp forceRedirectUrl={redirect} signInUrl="/sign-in?redirect_url=%2Fstarten" />;
 }

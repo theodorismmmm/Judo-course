@@ -7,6 +7,7 @@ import { BELTS, CATEGORIES, categoryUnlocked, isBelt, isCategory } from "@/lib/b
 import { countLine, normalize, searchText, techniquesFor } from "@/lib/catalog";
 import type { BeltId, CategoryId, Technique } from "@/lib/types";
 import { BeltCloth } from "./BeltCloth";
+import { readProfile } from "@/lib/profile";
 import { KnownMark, useKnown } from "./KnownMark";
 import { SiteFooter } from "./SiteFooter";
 import { SiteHeader } from "./SiteHeader";
@@ -34,6 +35,7 @@ export function Dojo() {
   const art = isCategory(artParam) ? artParam : null;
   const [query, setQuery] = useState("");
   const [lockNote, setLockNote] = useState("");
+  const { isLoaded: accountLoaded, isSignedIn, known, user } = useKnown();
 
   useEffect(() => {
     if (belt) {
@@ -41,12 +43,13 @@ export function Dojo() {
       return;
     }
     if (params.get("wahl") === "1") return;
-    const saved = window.localStorage.getItem("judonow-gurt");
+    const profileBelt = accountLoaded && isSignedIn ? readProfile(user?.unsafeMetadata).belt : null;
+    const saved = profileBelt ?? window.localStorage.getItem("judonow-gurt");
     if (!isBelt(saved)) return;
     const next = new URLSearchParams(params.toString());
     next.set("gurt", saved);
     router.replace(`/ueben?${next.toString()}`);
-  }, [belt, params, router]);
+  }, [accountLoaded, belt, isSignedIn, params, router, user]);
 
   function write(next: URLSearchParams) {
     const queryString = next.toString();
@@ -94,7 +97,6 @@ export function Dojo() {
     return searchText(technique).includes(needle);
   });
 
-  const { isLoaded: accountLoaded, isSignedIn, known } = useKnown();
   const throwsHere = available.filter((technique) => technique.category === "wurf");
   const knownHere = throwsHere.filter((technique) => known.has(technique.slug)).length;
 
@@ -128,11 +130,11 @@ export function Dojo() {
 
       {!belt ? (
         <section className="chooser" id="inhalt">
-          <p className="eyebrow">Starte jetzt mit JudoNOW</p>
+          <p className="eyebrow">Dein Dojo</p>
           <h1>Welchen Gürtel trägst du?</h1>
           <p className="deck">
-            Danach stehen die Übungen dieses Gürtels sofort da. Japanische Namen stehen so, wie man sie auf Deutsch
-            liest: Kesa Gatame, O Soto Gari, Juji Gatame.
+            Tippe deine Farbe. Dann siehst du nur die Übungen dafür: Würfe, Haltegriffe und was schon frei ist.
+            Namen stehen auf Deutsch lesbar, zum Beispiel Kesa Gatame.
           </p>
           <div className="belt-grid">
             {BELTS.map((item) => {
@@ -333,6 +335,7 @@ export function Dojo() {
                                 <span>{technique.jp}</span>
                                 {technique.kanji && <span className="kanji">{technique.kanji}</span>}
                               </p>
+                              <p className="card-blurb">{technique.principle}</p>
                             </div>
                           </Link>
                           {technique.category === "wurf" && <KnownMark slug={technique.slug} />}

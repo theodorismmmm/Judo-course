@@ -12,7 +12,8 @@ export function AccountSlot() {
         className="text-link"
         onClick={() => {
           const here = window.location.pathname + window.location.search;
-          window.location.href = `/sign-in?redirect_url=${encodeURIComponent(here)}`;
+          const next = here === "/" ? "/starten" : here;
+          window.location.href = `/sign-in?redirect_url=${encodeURIComponent(next)}`;
         }}
       >
         Anmelden

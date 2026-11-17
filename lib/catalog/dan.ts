@@ -24,14 +24,14 @@ export const dan = [
   ),
   tech(
     "o-soto-otoshi",
-    "dan1",
+    "gelb",
     "wurf",
     "reap-out",
     "Großer Außensturz",
     "O Soto Otoshi",
     "大外落",
-    "Shinmeisho no waza",
-    "Die Richtung der großen Außensichel, aber das Bein stellt sich hinter Uke und du setzt das Gewicht ab, statt frei zu sicheln.",
+    "Zum O Soto Gari",
+    "Die Richtung der großen Außensichel, aber das Bein stellt sich hinter Uke und du setzt das Gewicht ab, statt frei zu sicheln. Am Gelbgurt übst du ihn direkt neben O Soto Gari.",
     [
       "Uke auf die Ferse nach hinten bringen.",
       "Eng an die Seite, das Bein stellt sich hinter seine Beine.",

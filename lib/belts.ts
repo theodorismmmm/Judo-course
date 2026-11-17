@@ -28,7 +28,7 @@ export const BELTS: Belt[] = [
     cloth: "#f0c84a",
     ink: "#16130f",
     stripes: 0,
-    line: "Fallen, werfen, halten. Die ersten Klammern.",
+    line: "Die großen Würfe: Schulter, Außen- und Innensichel. Dazu halten und die ersten Klammern.",
   },
   {
     id: "gelb-orange",
@@ -38,7 +38,7 @@ export const BELTS: Belt[] = [
     clothEnd: "#e07032",
     ink: "#16130f",
     stripes: 0,
-    line: "Dieselben Würfe sicherer, Varianten am Boden.",
+    line: "Schwebende Hüfte, beidarmiger Schulterwurf und Varianten am Boden.",
   },
   {
     id: "orange",
@@ -47,7 +47,7 @@ export const BELTS: Belt[] = [
     cloth: "#e07032",
     ink: "#16130f",
     stripes: 0,
-    line: "Fußtechnik, Befreiungen und die ersten Würgegriffe.",
+    line: "Mehr Würfe: Knierad aus dem Gelbgurt, kleine Sicheln, Nachfegen. Dazu die ersten Würgegriffe.",
   },
   {
     id: "orange-gruen",
@@ -57,7 +57,7 @@ export const BELTS: Belt[] = [
     clothEnd: "#2f7a45",
     ink: "#16130f",
     stripes: 0,
-    line: "Werfen auf einem Bein und der nächste Hebel.",
+    line: "Hüftfegen, Hüftrad und der nächste Hebel.",
   },
   {
     id: "gruen",

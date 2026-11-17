@@ -1,76 +1,77 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import { BELTS } from "@/lib/belts";
+import { useEffect } from "react";
+import { useUser } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
+import { REVIEWS, SOCIAL } from "@/lib/reviews";
+import { readProfile } from "@/lib/profile";
 import { AccountSlot } from "./AccountSlot";
-import { BeltCloth } from "./BeltCloth";
 
 export function Landing() {
-  const [phase, setPhase] = useState<"motto" | "start">("motto");
+  const { isLoaded, isSignedIn, user } = useUser();
+  const router = useRouter();
 
   useEffect(() => {
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduce) {
-      setPhase("start");
-      return;
-    }
-    const timer = window.setTimeout(() => setPhase("start"), 2600);
-    return () => window.clearTimeout(timer);
-  }, []);
+    if (!isLoaded || !isSignedIn || !user) return;
+    const profile = readProfile(user.unsafeMetadata);
+    router.replace(profile.onboarded ? "/ueben" : "/starten");
+  }, [isLoaded, isSignedIn, router, user]);
 
   return (
-    <main id="inhalt" className={`landing ${phase === "start" ? "is-start" : "is-motto"}`}>
-      <header className="landing-bar">
-        <p className="wordmark">JudoNOW</p>
-        <AccountSlot />
-      </header>
-      <div className="spine" aria-hidden="true">
-        {BELTS.map((belt) => (
-          <BeltCloth key={belt.id} belt={belt} />
-        ))}
+    <main id="inhalt" className="landing">
+      <div className="landing-shell">
+        <header className="landing-bar">
+          <p className="wordmark">JudoNOW</p>
+          <AccountSlot />
+        </header>
+
+        <section className="landing-hero">
+          <div className="landing-copy">
+            <p className="eyebrow">JudoNOW</p>
+            <h1>
+              Ready für den
+              <span className="ready"> nächsten Gürtel</span>
+            </h1>
+            <p className="lead">
+              Filme, Karteikarten und dein Gürtelplan an einem Ort. Melde dich an, sag dein Ziel und starte.
+            </p>
+            <div className="landing-actions">
+              <Link href="/sign-up?redirect_url=%2Fstarten" className="cta">
+                Anmelden
+              </Link>
+              <Link href="/sign-in?redirect_url=%2Fstarten" className="cta cta-ghost">
+                Ich habe schon ein Konto
+              </Link>
+            </div>
+            <p className="social-proof">{SOCIAL.line}</p>
+          </div>
+          <figure className="landing-photo">
+            <img src="/images/landing-hero.jpg" alt="Zwei Judoka auf der Matte beim Wurf" />
+          </figure>
+          <p className="landing-more">
+            <Link href="/ueben">Ohne Konto ansehen</Link>
+            <Link href="/filme">Filme</Link>
+            <Link href="/karten">Karten</Link>
+          </p>
+        </section>
+
+        <section className="reviews" aria-label="Stimmen">
+          <p className="eyebrow">{SOCIAL.users} Judoka</p>
+          <h2>Das sagen Leute, die schon trainieren</h2>
+          <div className="review-grid">
+            {REVIEWS.map((review) => (
+              <blockquote key={review.name} className="review">
+                <p>{review.text}</p>
+                <footer>
+                  <strong>{review.name}</strong>
+                  <span>{review.belt}</span>
+                </footer>
+              </blockquote>
+            ))}
+          </div>
+        </section>
       </div>
-
-      <section className="layer motto-layer" inert={phase !== "motto"}>
-        <button type="button" className="motto-hit" onClick={() => setPhase("start")}>
-          <p className="eyebrow">JudoNOW</p>
-          <h1>
-            <span className="ready">Ready</span>
-            <span>für den nächsten Gürtel</span>
-          </h1>
-          <span className="timer" aria-hidden="true">
-            <span />
-          </span>
-          <span className="skip">Weiter</span>
-        </button>
-        <noscript>
-          <a className="cta" href="/ueben">
-            Starte jetzt mit JudoNOW
-          </a>
-        </noscript>
-      </section>
-
-      <section className="layer start-layer" inert={phase !== "start"}>
-        <p className="eyebrow">Ready für den nächsten Gürtel</p>
-        <h2>
-          Starte jetzt
-          <span className="with">mit JudoNOW</span>
-        </h2>
-        <p className="lead">Wähle die Farbe, die du trägst. Die Übungen dieses Gürtels stehen sofort da.</p>
-        <div className="picks">
-          {BELTS.map((belt) => (
-            <Link key={belt.id} href={`/ueben?gurt=${belt.id}`} className="pick">
-              <BeltCloth belt={belt} />
-              <span className="pick-name">{belt.name}</span>
-              <span className="pick-kyu">{belt.kyu}</span>
-            </Link>
-          ))}
-        </div>
-        <p className="landing-more">
-          <Link href="/filme">Filme aller Attacken</Link>
-          <Link href="/karten">Karteikarten</Link>
-        </p>
-      </section>
     </main>
   );
 }
