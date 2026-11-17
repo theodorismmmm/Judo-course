@@ -9,25 +9,55 @@ export const BELTS: Belt[] = [
     cloth: "#f3efe6",
     ink: "#16130f",
     stripes: 0,
-    line: "Gruß, Fallen und die ersten zwei Würfe.",
+    line: "Gruß, Stand und die ersten Fallübungen.",
+  },
+  {
+    id: "weiss-gelb",
+    name: "Weiß-Gelb",
+    kyu: "8. Kyu",
+    cloth: "#f3efe6",
+    clothEnd: "#f0c84a",
+    ink: "#16130f",
+    stripes: 0,
+    line: "Der erste Wurf und der erste Haltegriff.",
   },
   {
     id: "gelb",
     name: "Gelbgurt",
-    kyu: "5. Kyu",
+    kyu: "7. Kyu",
     cloth: "#f0c84a",
     ink: "#16130f",
     stripes: 0,
-    line: "Fallen, werfen, halten. Die erste große Gruppe.",
+    line: "Fallen, werfen, halten. Die ersten Klammern.",
+  },
+  {
+    id: "gelb-orange",
+    name: "Gelb-Orange",
+    kyu: "6. Kyu",
+    cloth: "#f0c84a",
+    clothEnd: "#e07032",
+    ink: "#16130f",
+    stripes: 0,
+    line: "Dieselben Würfe sicherer, Varianten am Boden.",
   },
   {
     id: "orange",
     name: "Orangegurt",
-    kyu: "4. Kyu",
+    kyu: "5. Kyu",
     cloth: "#e07032",
     ink: "#16130f",
     stripes: 0,
-    line: "Mehr Fußtechnik, der zweite Schulterwurf, Befreiungen.",
+    line: "Fußtechnik, Befreiungen und die ersten Würgegriffe.",
+  },
+  {
+    id: "orange-gruen",
+    name: "Orange-Grün",
+    kyu: "4. Kyu",
+    cloth: "#e07032",
+    clothEnd: "#2f7a45",
+    ink: "#16130f",
+    stripes: 0,
+    line: "Werfen auf einem Bein und der nächste Hebel.",
   },
   {
     id: "gruen",
@@ -45,7 +75,7 @@ export const BELTS: Belt[] = [
     cloth: "#1e4f86",
     ink: "#f4efe6",
     stripes: 0,
-    line: "Taktik. Dazu Würgegriffe, Klammern und ihr Entkommen.",
+    line: "Taktik, Konter und der Griffkampf.",
   },
   {
     id: "braun",
@@ -82,6 +112,7 @@ export const CATEGORIES: {
   one: string;
   many: string;
   from?: BeltId;
+  fromLabel?: string;
   lock: string;
 }[] = [
   {
@@ -117,16 +148,18 @@ export const CATEGORIES: {
     label: "Würgegriffe",
     one: "Würgegriff",
     many: "Würgegriffe",
-    from: "blau",
-    lock: "Würgegriffe stehen ab dem blauen Gürtel. Nur auf der Matte, nur mit Trainerin oder Trainer, nur bis zum Abtippen.",
+    from: "orange",
+    fromLabel: "Orange",
+    lock: "Würgegriffe stehen ab Orange. Nur auf der Matte, nur mit Trainerin oder Trainer, nur bis zum Abtippen.",
   },
   {
     id: "klammer",
     label: "Klammern",
     one: "Klammer",
     many: "Klammern",
-    from: "blau",
-    lock: "Klammern sind Armhebel. Sie kommen ab dem blauen Gürtel und werden langsam geführt, nie gerissen. Uke tippt ab, Tori lässt los.",
+    from: "gelb",
+    fromLabel: "Gelb",
+    lock: "Klammern sind Armhebel. Die ersten stehen ab dem gelben Gürtel und werden langsam geführt, nie gerissen. Uke tippt ab, Tori lässt los.",
   },
   {
     id: "entkommen",

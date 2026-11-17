@@ -1,7 +1,10 @@
 export const BELT_IDS = [
   "weiss",
+  "weiss-gelb",
   "gelb",
+  "gelb-orange",
   "orange",
+  "orange-gruen",
   "gruen",
   "blau",
   "braun",
@@ -101,6 +104,7 @@ export type Belt = {
   name: string;
   kyu: string;
   cloth: string;
+  clothEnd?: string;
   ink: string;
   stripes: number;
   line: string;
