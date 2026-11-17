@@ -7,7 +7,9 @@ import { BELTS, CATEGORIES, categoryUnlocked, isBelt, isCategory } from "@/lib/b
 import { countLine, normalize, searchText, techniquesFor } from "@/lib/catalog";
 import type { BeltId, CategoryId, Technique } from "@/lib/types";
 import { BeltCloth } from "./BeltCloth";
+import { KnownMark, useKnown } from "./KnownMark";
 import { SiteFooter } from "./SiteFooter";
+import { SiteHeader } from "./SiteHeader";
 import { TechniqueFilm } from "./TechniqueFilm";
 
 function plural(count: number, one: string, many: string) {
@@ -92,6 +94,10 @@ export function Dojo() {
     return searchText(technique).includes(needle);
   });
 
+  const { isLoaded: accountLoaded, isSignedIn, known } = useKnown();
+  const throwsHere = available.filter((technique) => technique.category === "wurf");
+  const knownHere = throwsHere.filter((technique) => known.has(technique.slug)).length;
+
   const sections = useMemo(() => {
     const grouped: { id: CategoryId; label: string; groups: [string, Technique[]][] }[] = [];
     for (const category of CATEGORIES) {
@@ -110,19 +116,15 @@ export function Dojo() {
 
   return (
     <div className="dojo">
-      <header className="top">
-        <Link href="/" className="wordmark">
-          JudoNOW
-        </Link>
-        <p>Ready für den nächsten Gürtel</p>
-        {belt ? (
-          <Link href="/ueben?wahl=1" className="text-link">
-            Gürtel wechseln
-          </Link>
-        ) : (
-          <span className="text-link quiet">Ohne Konto</span>
-        )}
-      </header>
+      <SiteHeader
+        trailing={
+          belt ? (
+            <Link href="/ueben?wahl=1" className="text-link">
+              Gürtel wechseln
+            </Link>
+          ) : null
+        }
+      />
 
       {!belt ? (
         <section className="chooser" id="inhalt">
@@ -160,6 +162,13 @@ export function Dojo() {
               <p className="eyebrow">{belt.kyu}</p>
               <h1>{belt.name}</h1>
               <p className="deck">{belt.line}</p>
+              {throwsHere.length > 0 && (
+                <p className="known-line">
+                  {accountLoaded && isSignedIn
+                    ? `${knownHere} von ${throwsHere.length} Würfen hier schon abgehakt.`
+                    : "Mit einem Konto hakst du die Würfe ab, die du schon kannst."}
+                </p>
+              )}
             </div>
             <div className="scope" role="group" aria-label="Umfang">
               <button type="button" aria-pressed={scope === "rank"} onClick={() => setScope("rank")}>
@@ -290,10 +299,13 @@ export function Dojo() {
                       {section.groups.length > 1 && <h3>{group}</h3>}
                       <div className="cards">
                         {items.map((technique, index) => (
-                          <Link
+                          <article
                             key={technique.slug}
+                            className={`card${known.has(technique.slug) ? " is-known" : ""}`}
+                          >
+                          <Link
                             href={`/technik/${technique.slug}?${practiceQuery(belt.id, scope, activeArt)}`}
-                            className="card"
+                            className="card-link"
                           >
                             {technique.youtube ? (
                               <span className="thumb" aria-hidden="true">
@@ -323,6 +335,8 @@ export function Dojo() {
                               </p>
                             </div>
                           </Link>
+                          {technique.category === "wurf" && <KnownMark slug={technique.slug} />}
+                          </article>
                         ))}
                       </div>
                     </div>

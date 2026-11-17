@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { BELTS } from "@/lib/belts";
+import { AccountSlot } from "./AccountSlot";
 import { BeltCloth } from "./BeltCloth";
 
 export function Landing() {
@@ -22,7 +23,7 @@ export function Landing() {
     <main id="inhalt" className={`landing ${phase === "start" ? "is-start" : "is-motto"}`}>
       <header className="landing-bar">
         <p className="wordmark">JudoNOW</p>
-        <p className="landing-meta">Ohne Konto</p>
+        <AccountSlot />
       </header>
       <div className="spine" aria-hidden="true">
         {BELTS.map((belt) => (
@@ -65,6 +66,10 @@ export function Landing() {
             </Link>
           ))}
         </div>
+        <p className="landing-more">
+          <Link href="/filme">Filme aller Attacken</Link>
+          <Link href="/karten">Karteikarten</Link>
+        </p>
       </section>
     </main>
   );

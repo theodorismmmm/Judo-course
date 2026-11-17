@@ -10,7 +10,8 @@ export function SiteFooter() {
         Die Farben folgen der DJB-Reihenfolge von 2024: Weiß, Weiß-Gelb, Gelb, Gelb-Orange, Orange, Orange-Grün,
         Grün, Blau, Braun, dann 1. und 2. Dan. Vereine können die Prüfungsschwerpunkte anders setzen.
       </p>
-      <p>Lehrfilme laufen über YouTube. Der gezeichnete Ablauf darunter ist die Schrittfolge.</p>
+      <p>Lehrfilme laufen über YouTube. Der gezeichnete Ablauf darunter ist die Schrittfolge, wenn es keinen einzelnen Film gibt.</p>
+      <p>Ein Konto merkt sich, welche Würfe du schon kannst.</p>
     </footer>
   );
 }
