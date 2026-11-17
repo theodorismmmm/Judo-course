@@ -8,6 +8,7 @@ import { AccountSlot } from "./AccountSlot";
 const TABS = [
   { href: "/ueben", label: "Übungen" },
   { href: "/filme", label: "Filme" },
+  { href: "/workout", label: "Workout" },
   { href: "/karten", label: "Karten" },
 ];
 
@@ -19,21 +20,30 @@ function current(path: string, href: string) {
 export function SiteHeader({ trailing }: { trailing?: ReactNode }) {
   const path = usePathname();
   return (
-    <header className="top site-top">
-      <Link href="/" className="wordmark">
-        JudoNOW
-      </Link>
-      <nav className="tabs" aria-label="Bereiche">
+    <>
+      <header className="top site-top">
+        <Link href="/" className="wordmark">
+          JudoNOW
+        </Link>
+        <nav className="tabs desktop-tabs" aria-label="Bereiche">
+          {TABS.map((tab) => (
+            <Link key={tab.href} href={tab.href} aria-current={current(path, tab.href) ? "page" : undefined}>
+              {tab.label}
+            </Link>
+          ))}
+        </nav>
+        <div className="top-end">
+          {trailing}
+          <AccountSlot />
+        </div>
+      </header>
+      <nav className="phone-dock" aria-label="Hauptbereiche">
         {TABS.map((tab) => (
           <Link key={tab.href} href={tab.href} aria-current={current(path, tab.href) ? "page" : undefined}>
             {tab.label}
           </Link>
         ))}
       </nav>
-      <div className="top-end">
-        {trailing}
-        <AccountSlot />
-      </div>
-    </header>
+    </>
   );
 }

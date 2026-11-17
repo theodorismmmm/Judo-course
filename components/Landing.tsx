@@ -49,9 +49,10 @@ export function Landing() {
           <figure className="landing-photo">
             <img src="/images/landing-hero.jpg" alt="Zwei Judoka auf der Matte beim Wurf" />
           </figure>
-          <p className="landing-more">
+            <p className="landing-more">
             <Link href="/ueben">Ohne Konto ansehen</Link>
             <Link href="/filme">Filme</Link>
+            <Link href="/workout">Workout</Link>
             <Link href="/karten">Karten</Link>
           </p>
         </section>
