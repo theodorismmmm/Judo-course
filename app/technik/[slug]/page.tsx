@@ -18,7 +18,7 @@ export async function generateMetadata({
   const technique = getTechnique(slug);
   if (!technique) return { title: "Nicht gefunden" };
   return {
-    title: `${technique.de} · ${technique.reading}`,
+    title: technique.reading,
     description: technique.principle,
   };
 }

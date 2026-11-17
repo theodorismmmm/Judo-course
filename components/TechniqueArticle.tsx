@@ -16,15 +16,14 @@ export function TechniqueArticle({ technique }: { technique: Technique }) {
       <TechniqueFrame
         slug={technique.slug}
         ownBelt={belt.id}
-        fallbackPrev={prev ? { slug: prev.slug, de: prev.de } : undefined}
-        fallbackNext={next ? { slug: next.slug, de: next.de } : undefined}
+        fallbackPrev={prev ? { slug: prev.slug, reading: prev.reading } : undefined}
+        fallbackNext={next ? { slug: next.slug, reading: next.reading } : undefined}
       >
       <article className="technique" id="inhalt">
         <p className="eyebrow">
           {belt.name} · {category.label}
         </p>
-        <h1>{technique.de}</h1>
-        <p className="reading-large">{technique.reading}</p>
+        <h1>{technique.reading}</h1>
         {technique.category === "wurf" && <KnownMark slug={technique.slug} />}
         <p className="jp-line">
           <span>{technique.jp}</span>
@@ -52,7 +51,7 @@ export function TechniqueArticle({ technique }: { technique: Technique }) {
           motion={technique.motion}
           steps={technique.steps}
           mirror={technique.mirror}
-          label={`${technique.de}, ${technique.reading}`}
+          label={technique.reading}
           mode="player"
         />
         <p className="principle">{technique.principle}</p>

@@ -134,7 +134,7 @@ export function Dojo() {
           <h1>Welchen Gürtel trägst du?</h1>
           <p className="deck">
             Tippe deine Farbe. Dann siehst du nur die Übungen dafür: Würfe, Haltegriffe und was schon frei ist.
-            Namen stehen auf Deutsch lesbar, zum Beispiel Kesa Gatame.
+            Die Namen stehen japanisch, zum Beispiel Kesa Gatame.
           </p>
           <div className="belt-grid">
             {BELTS.map((item) => {
@@ -204,7 +204,7 @@ export function Dojo() {
               <input
                 value={query}
                 onChange={(event) => setQuery(event.target.value)}
-                placeholder="Kesa Gatame, Hüftwurf, Würgegriff"
+                placeholder="Kesa Gatame, O Soto Gari, Juji Gatame"
               />
             </label>
             <div className="chips" role="toolbar" aria-label="Art der Übung">
@@ -323,14 +323,13 @@ export function Dojo() {
                                 motion={technique.motion}
                                 steps={technique.steps}
                                 mirror={technique.mirror}
-                                label={technique.de}
+                                label={technique.reading}
                                 mode="still"
                               />
                             )}
                             <div className="card-body">
                               <p className="card-index">{String(index + 1).padStart(2, "0")}</p>
-                              <h4>{technique.de}</h4>
-                              <p className="reading">{technique.reading}</p>
+                              <h4>{technique.reading}</h4>
                               <p className="meta">
                                 <span>{technique.jp}</span>
                                 {technique.kanji && <span className="kanji">{technique.kanji}</span>}

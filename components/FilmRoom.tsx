@@ -120,8 +120,7 @@ export function FilmRoom() {
             </figure>
             <div className="stage-side">
               <p className="eyebrow">{beltById(current.belt)?.name}</p>
-              <h2>{current.de}</h2>
-              <p className="reading-large">{current.reading}</p>
+              <h2>{current.reading}</h2>
               <p className="meta">
                 <span>{current.jp}</span>
                 {current.kanji && <span className="kanji">{current.kanji}</span>}
@@ -146,8 +145,8 @@ export function FilmRoom() {
                     >
                       <span>{String(itemIndex + 1).padStart(2, "0")}</span>
                       <span>
-                        {technique.de}
-                        <small>{technique.reading}</small>
+                        {technique.reading}
+                        <small>{technique.jp}</small>
                       </span>
                     </button>
                   </li>
