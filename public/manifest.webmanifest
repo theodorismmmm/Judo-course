@@ -1,0 +1,32 @@
+{
+  "name": "JudoNOW",
+  "short_name": "JudoNOW",
+  "description": "Gürtelplan, Lehrfilme, Workouts und Karteikarten fürs Judo.",
+  "start_url": "/ueben",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#f3eee4",
+  "theme_color": "#f3eee4",
+  "lang": "de",
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

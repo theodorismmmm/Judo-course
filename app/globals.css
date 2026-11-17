@@ -18,11 +18,19 @@ html { scroll-behavior: smooth; }
 body {
   margin: 0;
   min-height: 100vh;
+  min-height: 100dvh;
   background: var(--cream);
   color: var(--ink);
   font-family: var(--sans);
   font-size: 17px;
   line-height: 1.5;
+  padding:
+    env(safe-area-inset-top, 0)
+    env(safe-area-inset-right, 0)
+    env(safe-area-inset-bottom, 0)
+    env(safe-area-inset-left, 0);
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior-y: none;
 }
 button, input { font: inherit; color: inherit; }
 button { cursor: pointer; }
@@ -42,6 +50,20 @@ img, svg { max-width: 100%; }
 }
 .skip-link:focus { top: 12px; }
 #inhalt { scroll-margin-top: 72px; }
+.phone-dock { display: none; }
+.offline-screen {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  text-align: center;
+  padding: 32px 20px;
+}
+.offline-note { color: var(--ink-soft); font-size: 0.92rem; }
+.mat-chips { margin-top: 8px; }
+.has-dock { padding-bottom: 0; }
 
 .wordmark {
   font-weight: 620;
@@ -627,6 +649,44 @@ img, svg { max-width: 100%; }
   .top p { display: none; }
   .chooser, .mat, .technique { padding-inline: 16px; }
   .belt-card { min-height: 0; }
+  .desktop-tabs { display: none; }
+  .site-top { grid-template-columns: 1fr auto; }
+  .phone-dock {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 6;
+    gap: 0;
+    padding: 8px 6px calc(8px + env(safe-area-inset-bottom, 0px));
+    background: rgba(251, 247, 240, 0.96);
+    backdrop-filter: blur(12px);
+    border-top: 1px solid var(--line);
+  }
+  .phone-dock a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    text-decoration: none;
+    font-size: 0.82rem;
+    font-weight: 620;
+    letter-spacing: -0.02em;
+  }
+  .phone-dock a[aria-current="page"] {
+    color: var(--seal);
+  }
+  .dojo, .room, .landing, .onboard, .auth-screen, .offline-screen {
+    padding-bottom: calc(72px + env(safe-area-inset-bottom, 0px));
+  }
+  .chips button, .scope button, .cta, .known, .goal {
+    min-height: 44px;
+  }
+  .yt-frame {
+    aspect-ratio: 16 / 9;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

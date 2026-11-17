@@ -1,7 +1,8 @@
 import { deDE } from "@clerk/localizations";
 import { ClerkProvider } from "@clerk/nextjs";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Instrument_Serif, Outfit } from "next/font/google";
+import { PwaRegister } from "@/components/PwaRegister";
 import "./globals.css";
 
 const serif = Instrument_Serif({
@@ -31,13 +32,34 @@ export const metadata: Metadata = {
     template: "%s · JudoNOW",
   },
   description:
-    "JudoNOW: Anmelden, Ziele setzen, Gürtel wählen. Lehrfilme, Karteikarten und dein Trainingsplan von Weiß bis zum 2. Dan.",
+    "JudoNOW: Gürtelplan, Lehrfilme, Workouts vor dem Training, Karteikarten. Auch vom iPhone-Homescreen offline nutzbar.",
+  applicationName: "JudoNOW",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "JudoNOW",
+  },
+  formatDetection: {
+    telephone: false,
+  },
+  manifest: "/manifest.webmanifest",
+  icons: {
+    apple: [{ url: "/icons/icon-180.png", sizes: "180x180" }],
+    icon: [
+      { url: "/icons/icon-192.png", sizes: "192x192" },
+      { url: "/icons/icon-512.png", sizes: "512x512" },
+    ],
+  },
+  other: {
+    "mobile-web-app-capable": "yes",
+  },
 };
 
-export const viewport = {
+export const viewport: Viewport = {
   themeColor: "#f3eee4",
   width: "device-width",
   initialScale: 1,
+  viewportFit: "cover",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -64,6 +86,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             Zum Inhalt
           </a>
           {children}
+          <PwaRegister />
         </ClerkProvider>
       </body>
     </html>
