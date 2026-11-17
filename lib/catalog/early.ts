@@ -120,7 +120,7 @@ export const early = [
   ),
   tech(
     "mae-mawari-ukemi",
-    "weiss",
+    "weiss-gelb",
     "fallschule",
     "ukemi-roll",
     "Vorwärtsrolle",
@@ -140,7 +140,7 @@ export const early = [
   ),
   tech(
     "o-goshi",
-    "weiss",
+    "weiss-gelb",
     "wurf",
     "hip",
     "Große Hüfte",
@@ -160,7 +160,7 @@ export const early = [
   ),
   tech(
     "de-ashi-harai",
-    "weiss",
+    "weiss-gelb",
     "wurf",
     "sweep",
     "Vorwärts-Fußfegen",
@@ -280,7 +280,7 @@ export const early = [
   ),
   tech(
     "kesa-gatame",
-    "gelb",
+    "weiss-gelb",
     "haltegriff",
     "pin-kesa",
     "Schärpenhaltegriff",
@@ -360,7 +360,7 @@ export const early = [
   ),
   tech(
     "entkommen-bruecke",
-    "gelb",
+    "weiss-gelb",
     "entkommen",
     "escape-hold",
     "Über die Brücke aus Kesa Gatame",
@@ -460,7 +460,7 @@ export const early = [
   ),
   tech(
     "morote-seoi-nage",
-    "orange",
+    "gelb-orange",
     "wurf",
     "seoi",
     "Beidarmiger Schulterwurf",
@@ -480,7 +480,7 @@ export const early = [
   ),
   tech(
     "tai-otoshi",
-    "orange",
+    "gelb-orange",
     "wurf",
     "body-drop",
     "Körpersturz",
@@ -580,7 +580,7 @@ export const early = [
   ),
   tech(
     "kuzure-kesa-gatame",
-    "orange",
+    "gelb-orange",
     "haltegriff",
     "pin-kesa",
     "Variierter Schärpenhaltegriff",
@@ -600,7 +600,7 @@ export const early = [
   ),
   tech(
     "umdrehen-bauchlage",
-    "orange",
+    "gelb-orange",
     "verbindung",
     "turn-over",
     "Umdrehen aus der Bauchlage",

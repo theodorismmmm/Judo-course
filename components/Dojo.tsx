@@ -14,6 +14,14 @@ function plural(count: number, one: string, many: string) {
   return `${count} ${count === 1 ? one : many}`;
 }
 
+function practiceQuery(beltId: BeltId, scope: "rank" | "path", art: CategoryId | null) {
+  const query = new URLSearchParams();
+  query.set("gurt", beltId);
+  if (scope === "path") query.set("pfad", "bis");
+  if (art) query.set("art", art);
+  return query.toString();
+}
+
 export function Dojo() {
   const params = useSearchParams();
   const router = useRouter();
@@ -97,7 +105,7 @@ export function Dojo() {
   }, [visible]);
 
   return (
-    <div className="dojo" id="inhalt">
+    <div className="dojo">
       <header className="top">
         <Link href="/" className="wordmark">
           JudoNOW
@@ -113,7 +121,7 @@ export function Dojo() {
       </header>
 
       {!belt ? (
-        <section className="chooser">
+        <section className="chooser" id="inhalt">
           <p className="eyebrow">Starte jetzt mit JudoNOW</p>
           <h1>Welchen Gürtel trägst du?</h1>
           <p className="deck">
@@ -142,7 +150,7 @@ export function Dojo() {
           </div>
         </section>
       ) : (
-        <section className="mat">
+        <section className="mat" id="inhalt">
           <div className="mat-head">
             <div>
               <p className="eyebrow">{belt.kyu}</p>
@@ -202,7 +210,7 @@ export function Dojo() {
                     onClick={() => setArt(category.id)}
                   >
                     {category.label}
-                    <span>{locked ? "ab Blau" : count}</span>
+                    <span>{locked ? `ab ${category.fromLabel}` : count}</span>
                   </button>
                 );
               })}
@@ -278,7 +286,11 @@ export function Dojo() {
                       {section.groups.length > 1 && <h3>{group}</h3>}
                       <div className="cards">
                         {items.map((technique, index) => (
-                          <Link key={technique.slug} href={`/technik/${technique.slug}?gurt=${belt.id}`} className="card">
+                          <Link
+                            key={technique.slug}
+                            href={`/technik/${technique.slug}?${practiceQuery(belt.id, scope, activeArt)}`}
+                            className="card"
+                          >
                             {technique.youtube ? (
                               <span className="thumb" aria-hidden="true">
                                 <img

@@ -1,9 +1,9 @@
-import Link from "next/link";
 import { beltById, categoryById } from "@/lib/belts";
 import { neighbors } from "@/lib/catalog";
 import type { Technique } from "@/lib/types";
 import { SiteFooter } from "./SiteFooter";
 import { TechniqueFilm } from "./TechniqueFilm";
+import { TechniqueFrame } from "./TechniqueFrame";
 
 export function TechniqueArticle({ technique }: { technique: Technique }) {
   const belt = beltById(technique.belt)!;
@@ -12,16 +12,13 @@ export function TechniqueArticle({ technique }: { technique: Technique }) {
 
   return (
     <div className="dojo detail">
-      <header className="top">
-        <Link href="/" className="wordmark">
-          JudoNOW
-        </Link>
-        <p>{belt.name}</p>
-        <Link href={`/ueben?gurt=${belt.id}`} className="text-link">
-          Alle Übungen
-        </Link>
-      </header>
-      <article className="technique">
+      <TechniqueFrame
+        slug={technique.slug}
+        ownBelt={belt.id}
+        fallbackPrev={prev ? { slug: prev.slug, de: prev.de } : undefined}
+        fallbackNext={next ? { slug: next.slug, de: next.de } : undefined}
+      >
+      <article className="technique" id="inhalt">
         <p className="eyebrow">
           {belt.name} · {category.label}
         </p>
@@ -75,25 +72,8 @@ export function TechniqueArticle({ technique }: { technique: Technique }) {
             </ul>
           </section>
         </div>
-        <nav className="neighbors" aria-label="Weitere Übungen dieses Gürtels">
-          {prev ? (
-            <Link href={`/technik/${prev.slug}?gurt=${belt.id}`}>
-              <span>Vorher</span>
-              {prev.de}
-            </Link>
-          ) : (
-            <span />
-          )}
-          {next ? (
-            <Link href={`/technik/${next.slug}?gurt=${belt.id}`}>
-              <span>Danach</span>
-              {next.de}
-            </Link>
-          ) : (
-            <span />
-          )}
-        </nav>
       </article>
+      </TechniqueFrame>
       <SiteFooter />
     </div>
   );
