@@ -8,7 +8,7 @@ import { techniquesFor } from "@/lib/catalog";
 import type { BeltId } from "@/lib/types";
 import { SiteHeader } from "./SiteHeader";
 
-type Neighbor = { slug: string; de: string };
+type Neighbor = { slug: string; reading: string };
 
 function listQuery(beltId: string, path: boolean, art: string | null) {
   const query = new URLSearchParams();
@@ -54,7 +54,7 @@ function Shell({
         {prev ? (
           <Link href={href(prev.slug)}>
             <span>Vorher</span>
-            {prev.de}
+            {prev.reading}
           </Link>
         ) : (
           <span />
@@ -62,7 +62,7 @@ function Shell({
         {next ? (
           <Link href={href(next.slug)}>
             <span>Danach</span>
-            {next.de}
+            {next.reading}
           </Link>
         ) : (
           <span />
@@ -111,8 +111,11 @@ function Live({
         }
       }
       const index = list.findIndex((item) => item.slug === slug);
-      prev = index > 0 ? list[index - 1] : undefined;
-      next = index >= 0 && index < list.length - 1 ? list[index + 1] : undefined;
+      prev = index > 0 ? { slug: list[index - 1].slug, reading: list[index - 1].reading } : undefined;
+      next =
+        index >= 0 && index < list.length - 1
+          ? { slug: list[index + 1].slug, reading: list[index + 1].reading }
+          : undefined;
     }
   }
 

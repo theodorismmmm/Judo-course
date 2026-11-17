@@ -134,7 +134,7 @@ export function Flashcards() {
                   onClick={() => choose("right", technique.slug)}
                 >
                   <strong>{technique.reading}</strong>
-                  <span>{technique.de}</span>
+                  <span>{technique.jp}</span>
                 </button>
               ))}
             </div>

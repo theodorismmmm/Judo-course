@@ -7,7 +7,7 @@ export const REVIEWS = [
   {
     name: "Mara K.",
     belt: "Gelbgurt",
-    text: "Endlich sehe ich jeden Wurf mit Film und deutschem Namen. Vor der Prüfung weiß ich genau, was fehlt.",
+    text: "Endlich sehe ich jeden Wurf mit Film und dem japanischen Namen. Vor der Prüfung weiß ich genau, was fehlt.",
   },
   {
     name: "Jonas R.",
