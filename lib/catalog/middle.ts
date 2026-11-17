@@ -4,7 +4,7 @@ import { tech } from "./make";
 export const middle = [
   tech(
     "harai-goshi",
-    "gruen",
+    "orange-gruen",
     "wurf",
     "hip-leg",
     "Hüftfegen",
@@ -44,7 +44,7 @@ export const middle = [
   ),
   tech(
     "koshi-guruma",
-    "gruen",
+    "orange-gruen",
     "wurf",
     "hip",
     "Hüftrad",
@@ -64,7 +64,7 @@ export const middle = [
   ),
   tech(
     "okuri-ashi-harai",
-    "gruen",
+    "orange-gruen",
     "wurf",
     "sweep",
     "Nachfegen",
@@ -164,7 +164,7 @@ export const middle = [
   ),
   tech(
     "kata-gatame",
-    "gruen",
+    "orange-gruen",
     "haltegriff",
     "pin-kata",
     "Schulterhaltegriff",
@@ -404,7 +404,7 @@ export const middle = [
   ),
   tech(
     "gyaku-juji-jime",
-    "blau",
+    "orange",
     "wuergegriff",
     "choke-cross",
     "Gegenkreuzwürgen",
@@ -424,7 +424,7 @@ export const middle = [
   ),
   tech(
     "nami-juji-jime",
-    "blau",
+    "orange",
     "wuergegriff",
     "choke-cross",
     "Normales Kreuzwürgen",
@@ -444,7 +444,7 @@ export const middle = [
   ),
   tech(
     "okuri-eri-jime",
-    "blau",
+    "orange",
     "wuergegriff",
     "choke-collar",
     "Schiebendes Reverswürgen",
@@ -464,7 +464,7 @@ export const middle = [
   ),
   tech(
     "juji-gatame",
-    "blau",
+    "gelb",
     "klammer",
     "arm-juji",
     "Kreuzhebel",
@@ -484,7 +484,7 @@ export const middle = [
   ),
   tech(
     "ude-garami",
-    "blau",
+    "gelb",
     "klammer",
     "arm-garami",
     "Armknoten",
@@ -504,7 +504,7 @@ export const middle = [
   ),
   tech(
     "hiza-gatame",
-    "blau",
+    "orange-gruen",
     "klammer",
     "arm-knee",
     "Kniehebel",
@@ -524,7 +524,7 @@ export const middle = [
   ),
   tech(
     "entkommen-juji",
-    "blau",
+    "gelb",
     "entkommen",
     "escape-arm",
     "Entkommen aus dem Kreuzhebel",
@@ -544,7 +544,7 @@ export const middle = [
   ),
   tech(
     "entkommen-ude-garami",
-    "blau",
+    "gelb",
     "entkommen",
     "escape-arm",
     "Entkommen aus dem Armknoten",
@@ -564,7 +564,7 @@ export const middle = [
   ),
   tech(
     "abwehr-wuergen",
-    "blau",
+    "orange",
     "entkommen",
     "escape-arm",
     "Abtippen und den Würgegriff lösen",

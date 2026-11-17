@@ -29,11 +29,11 @@ export const metadata: Metadata = {
     template: "%s · JudoNOW",
   },
   description:
-    "Wähle deinen Gürtel und sieh Würfe, Haltegriffe und ab Blau Würgegriffe, Klammern und Entkommen. Vom Weißgurt bis zum 2. Dan, ohne Anmeldung.",
+    "Wähle deinen Gürtel, von Weiß bis zum 2. Dan, inklusive Weiß-Gelb, Gelb-Orange und Orange-Grün. Klammern ab Gelb, Würgegriffe ab Orange. Ohne Anmeldung.",
 };
 
 export const viewport = {
-  themeColor: "#100e0c",
+  themeColor: "#f3eee4",
   width: "device-width",
   initialScale: 1,
 };

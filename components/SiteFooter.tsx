@@ -7,8 +7,8 @@ export function SiteFooter() {
       </p>
       <p>Kani-basami, Kawazu-gake und Daki-age sind im Wettkampf verboten und hier keine Übung.</p>
       <p>
-        Die Gürtel folgen dem Vereinsweg von Weiß bis zum 2. Dan. Verbände, auch der DJB seit 2024, können
-        Zwischenfarben und andere Prüfungsschwerpunkte führen.
+        Die Farben folgen der DJB-Reihenfolge von 2024: Weiß, Weiß-Gelb, Gelb, Gelb-Orange, Orange, Orange-Grün,
+        Grün, Blau, Braun, dann 1. und 2. Dan. Vereine können die Prüfungsschwerpunkte anders setzen.
       </p>
       <p>Lehrfilme laufen über YouTube. Der gezeichnete Ablauf darunter ist die Schrittfolge.</p>
     </footer>
