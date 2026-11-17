@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     template: "%s · JudoNOW",
   },
   description:
-    "Wähle deinen Gürtel, von Weiß bis zum 2. Dan. Lehrfilme zu den Attacken, Karteikarten, und ein Konto zum Abhaken der Würfe, die du schon kannst.",
+    "JudoNOW: Anmelden, Ziele setzen, Gürtel wählen. Lehrfilme, Karteikarten und dein Trainingsplan von Weiß bis zum 2. Dan.",
 };
 
 export const viewport = {

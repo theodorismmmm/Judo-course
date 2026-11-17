@@ -64,13 +64,13 @@ export const middle = [
   ),
   tech(
     "okuri-ashi-harai",
-    "orange-gruen",
+    "orange",
     "wurf",
     "sweep",
     "Nachfegen",
     "Okuri Ashi Harai",
     "送足払",
-    "Gokyo · 2. Gruppe",
+    "Orangegurt",
     "Uke bewegt sich seitlich, beide Füße kommen für einen Moment zusammen. Du fegst beide in Bewegungsrichtung weg.",
     [
       "Seitlich mitgehen, bis Ukes Füße sich in der Bewegung treffen.",
@@ -84,14 +84,14 @@ export const middle = [
   ),
   tech(
     "tsuri-goshi",
-    "gruen",
+    "gelb-orange",
     "wurf",
     "hip",
     "Hebehüfte",
     "Tsuri Goshi",
     "釣腰",
-    "Gokyo · 3. Gruppe",
-    "Eine Hand greift um die Taille an den Gürtel und hebt, während die Hüfte ein dreht. Der Wurf hebt Uke auf das Becken, statt ihn nur zu ziehen.",
+    "Nach dem Gelbgurt",
+    "Nach dem Gelbgurt: Eine Hand greift um die Taille an den Gürtel und hebt, während die Hüfte ein dreht. Der Wurf hebt Uke auf das Becken, statt ihn nur zu ziehen.",
     [
       "Den Ärmel führen, die andere Hand um die Taille an den Gürtel.",
       "Eindrehen, Knie tief, der Gürtelgriff hebt.",
