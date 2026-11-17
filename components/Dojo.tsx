@@ -34,7 +34,11 @@ export function Dojo() {
   const [lockNote, setLockNote] = useState("");
 
   useEffect(() => {
-    if (belt || params.get("wahl") === "1") return;
+    if (belt) {
+      window.localStorage.setItem("judonow-gurt", belt.id);
+      return;
+    }
+    if (params.get("wahl") === "1") return;
     const saved = window.localStorage.getItem("judonow-gurt");
     if (!isBelt(saved)) return;
     const next = new URLSearchParams(params.toString());
