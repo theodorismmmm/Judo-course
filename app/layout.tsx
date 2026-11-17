@@ -1,3 +1,5 @@
+import { deDE } from "@clerk/localizations";
+import { ClerkProvider } from "@clerk/nextjs";
 import type { Metadata } from "next";
 import { Instrument_Serif, Outfit } from "next/font/google";
 import "./globals.css";
@@ -29,7 +31,7 @@ export const metadata: Metadata = {
     template: "%s · JudoNOW",
   },
   description:
-    "Wähle deinen Gürtel, von Weiß bis zum 2. Dan, inklusive Weiß-Gelb, Gelb-Orange und Orange-Grün. Klammern ab Gelb, Würgegriffe ab Orange. Ohne Anmeldung.",
+    "Wähle deinen Gürtel, von Weiß bis zum 2. Dan. Lehrfilme zu den Attacken, Karteikarten, und ein Konto zum Abhaken der Würfe, die du schon kannst.",
 };
 
 export const viewport = {
@@ -42,10 +44,27 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="de" className={`${serif.variable} ${sans.variable}`}>
       <body>
-        <a className="skip-link" href="#inhalt">
-          Zum Inhalt
-        </a>
-        {children}
+        <ClerkProvider
+          localization={deDE}
+          signInUrl="/sign-in"
+          signUpUrl="/sign-up"
+          afterSignOutUrl="/"
+          appearance={{
+            variables: {
+              colorPrimary: "#16130f",
+              colorDanger: "#c4452d",
+              colorBackground: "#fbf7f0",
+              colorForeground: "#16130f",
+              borderRadius: "2px",
+              fontFamily: "Outfit, sans-serif",
+            },
+          }}
+        >
+          <a className="skip-link" href="#inhalt">
+            Zum Inhalt
+          </a>
+          {children}
+        </ClerkProvider>
       </body>
     </html>
   );

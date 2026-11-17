@@ -1,6 +1,7 @@
 import { beltById, categoryById } from "@/lib/belts";
 import { neighbors } from "@/lib/catalog";
 import type { Technique } from "@/lib/types";
+import { KnownMark } from "./KnownMark";
 import { SiteFooter } from "./SiteFooter";
 import { TechniqueFilm } from "./TechniqueFilm";
 import { TechniqueFrame } from "./TechniqueFrame";
@@ -24,6 +25,7 @@ export function TechniqueArticle({ technique }: { technique: Technique }) {
         </p>
         <h1>{technique.de}</h1>
         <p className="reading-large">{technique.reading}</p>
+        {technique.category === "wurf" && <KnownMark slug={technique.slug} />}
         <p className="jp-line">
           <span>{technique.jp}</span>
           {technique.kanji && <span className="kanji">{technique.kanji}</span>}

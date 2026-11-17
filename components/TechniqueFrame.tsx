@@ -6,6 +6,7 @@ import { useSearchParams } from "next/navigation";
 import { beltById, isBelt, isCategory } from "@/lib/belts";
 import { techniquesFor } from "@/lib/catalog";
 import type { BeltId } from "@/lib/types";
+import { SiteHeader } from "./SiteHeader";
 
 type Neighbor = { slug: string; de: string };
 
@@ -38,15 +39,16 @@ function Shell({
 
   return (
     <>
-      <header className="top">
-        <Link href="/" className="wordmark">
-          JudoNOW
-        </Link>
-        <p>{belt.name}</p>
-        <Link href={`/ueben?${query}`} className="text-link">
-          Alle Übungen
-        </Link>
-      </header>
+      <SiteHeader
+        trailing={
+          <>
+            <span className="quiet-name">{belt.name}</span>
+            <Link href={`/ueben?${query}`} className="text-link">
+              Alle Übungen
+            </Link>
+          </>
+        }
+      />
       {children}
       <nav className="neighbors" aria-label="Weitere Übungen dieser Liste">
         {prev ? (
