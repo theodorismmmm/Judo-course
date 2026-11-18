@@ -134,7 +134,8 @@ export function Dojo() {
           <h1>Welchen Gürtel trägst du?</h1>
           <p className="deck">
             Tippe deine Farbe. Dann siehst du nur die Übungen dafür: Würfe, Haltegriffe und was schon frei ist.
-            Die Namen stehen japanisch, zum Beispiel Kesa Gatame.
+            Die Namen stehen japanisch, zum Beispiel Kesa Gatame. Den Weg, den Plan und die Prüfung findest du unter{" "}
+            <Link href="/bibliothek">Mehr</Link>.
           </p>
           <div className="belt-grid">
             {BELTS.map((item) => {

@@ -1,8 +1,16 @@
 import Link from "next/link";
+import { LIBRARY } from "@/lib/library";
 
 export function SiteFooter() {
   return (
     <footer className="site-footer">
+      <nav className="footer-links" aria-label="Texte">
+        {LIBRARY.map((item) => (
+          <Link key={item.href} href={item.href}>
+            {item.title}
+          </Link>
+        ))}
+      </nav>
       <p>
         Sportliches Judo fürs Dojo. Würgegriffe und Klammern nur mit qualifizierter Aufsicht, langsam, und nur bis zum
         Abtippen.
@@ -15,8 +23,6 @@ export function SiteFooter() {
       <p>Lehrfilme laufen über YouTube. Der gezeichnete Ablauf darunter ist die Schrittfolge, wenn es keinen einzelnen Film gibt.</p>
       <p>Ein Konto merkt sich deine Ziele, deinen Gürtel und welche Würfe du schon kannst.</p>
       <p>
-        <Link href="/uebersicht">Seitenübersicht</Link>
-        {" · "}
         <a href="/sitemap.xml">XML-Sitemap</a>
         {" · "}
         <a href="/robots.txt">robots.txt</a>

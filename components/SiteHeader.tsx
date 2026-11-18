@@ -10,10 +10,14 @@ const TABS = [
   { href: "/filme", label: "Filme" },
   { href: "/workout", label: "Workout" },
   { href: "/karten", label: "Karten" },
+  { href: "/bibliothek", label: "Mehr" },
 ];
+
+const READING = ["/bibliothek", "/weg", "/plan", "/glossar", "/pruefung", "/sicherheit", "/uebersicht"];
 
 function current(path: string, href: string) {
   if (href === "/ueben") return path.startsWith("/ueben") || path.startsWith("/technik");
+  if (href === "/bibliothek") return READING.some((item) => path === item || path.startsWith(`${item}/`));
   return path === href || path.startsWith(`${href}/`);
 }
 
