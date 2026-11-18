@@ -40,6 +40,7 @@ function useReveal<T extends HTMLElement>() {
       },
       { threshold: 0.16, rootMargin: "0px 0px -8% 0px" },
     );
+    node.classList.add("is-armed");
     observer.observe(node);
     return () => observer.disconnect();
   }, []);

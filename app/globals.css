@@ -362,11 +362,11 @@ img, svg { max-width: 100%; }
   from { opacity: 0; transform: translateY(18px); }
   to { opacity: 1; transform: none; }
 }
-.reveal .rise-item {
+.reveal.is-armed:not(.is-in) .rise-item {
   opacity: 0;
   transform: translateY(22px);
 }
-.reveal.is-in .rise-item {
+.reveal.is-armed.is-in .rise-item {
   animation: rise 720ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
   animation-delay: var(--d, 0ms);
 }
@@ -995,7 +995,7 @@ img, svg { max-width: 100%; }
     transition: none !important;
   }
   .edge { background: var(--seal); }
-  .reveal .rise-item,
+  .reveal.is-armed .rise-item,
   .landing-copy,
   .landing-photo {
     opacity: 1 !important;
