@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect } from "react";
+import { useEffect, useRef, type CSSProperties } from "react";
 import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import { BELTS } from "@/lib/belts";
@@ -17,9 +17,44 @@ const ROOMS = [
   { href: "/karten", index: "04", title: "Karten", text: "Beschreibung lesen, den passenden Namen legen." },
 ];
 
+function delay(index: number, step = 70) {
+  return { "--d": `${index * step}ms` } as CSSProperties;
+}
+
+function useReveal<T extends HTMLElement>() {
+  const ref = useRef<T>(null);
+  useEffect(() => {
+    const node = ref.current;
+    if (!node) return;
+    const mark = () => node.classList.add("is-in");
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduce || !("IntersectionObserver" in window)) {
+      mark();
+      return;
+    }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (!entries.some((entry) => entry.isIntersecting)) return;
+        mark();
+        observer.disconnect();
+      },
+      { threshold: 0.16, rootMargin: "0px 0px -8% 0px" },
+    );
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
+  return ref;
+}
+
 export function Landing() {
   const { isLoaded, isSignedIn, user } = useUser();
   const router = useRouter();
+  const photoRef = useRef<HTMLImageElement>(null);
+  const barRef = useRef<HTMLDivElement>(null);
+  const roomsRef = useReveal<HTMLElement>();
+  const pathRef = useReveal<HTMLElement>();
+  const libraryRef = useReveal<HTMLElement>();
+  const reviewsRef = useReveal<HTMLElement>();
 
   useEffect(() => {
     if (!isLoaded || !isSignedIn || !user) return;
@@ -27,8 +62,35 @@ export function Landing() {
     router.replace(profile.onboarded ? "/ueben" : "/starten");
   }, [isLoaded, isSignedIn, router, user]);
 
+  useEffect(() => {
+    const photo = photoRef.current;
+    const bar = barRef.current;
+    if (!photo || !bar) return;
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduce) return;
+    let frame = 0;
+    const onScroll = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        const y = window.scrollY;
+        const max = document.documentElement.scrollHeight - window.innerHeight;
+        bar.style.transform = `scaleX(${max > 0 ? Math.min(y / max, 1) : 0})`;
+        photo.style.transform = `translateY(${Math.min(y, 520) * 0.08}px) scale(1.06)`;
+      });
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", onScroll);
+    };
+  }, []);
+
+  const loop = [...REVIEWS, ...REVIEWS];
+
   return (
     <main id="inhalt" className="landing">
+      <div ref={barRef} className="scroll-progress" aria-hidden="true" />
       <div className="landing-shell">
         <header className="landing-bar">
           <Link href="/" className="wordmark brand-mark">
@@ -59,13 +121,13 @@ export function Landing() {
             <p className="social-proof">{SOCIAL.line}</p>
           </div>
           <figure className="landing-photo">
-            <img src="/images/landing-hero.jpg" alt="Zwei Judoka auf der Matte beim Wurf" />
+            <img ref={photoRef} src="/images/landing-hero.jpg" alt="Zwei Judoka auf der Matte beim Wurf" />
           </figure>
         </section>
 
-        <section className="landing-rooms" aria-label="Bereiche">
-          {ROOMS.map((room) => (
-            <Link key={room.href} href={room.href} className="room-card">
+        <section ref={roomsRef} className="landing-rooms reveal" aria-label="Bereiche">
+          {ROOMS.map((room, index) => (
+            <Link key={room.href} href={room.href} className="room-card rise-item" style={delay(index, 90)}>
               <span>{room.index}</span>
               <strong>{room.title}</strong>
               <p>{room.text}</p>
@@ -73,23 +135,29 @@ export function Landing() {
           ))}
         </section>
 
-        <section className="landing-path" aria-labelledby="landing-path-title">
-          <div className="landing-path-head">
+        <section ref={pathRef} className="landing-path reveal" aria-labelledby="landing-path-title">
+          <div className="landing-path-head rise-item" style={delay(0)}>
             <p className="eyebrow">DJB-Reihenfolge</p>
             <h2 id="landing-path-title">Elf Ränge, eine Reihenfolge</h2>
           </div>
           <ol className="belt-strip">
-            {BELTS.map((belt) => (
-              <li key={belt.id}>
+            {BELTS.map((belt, index) => (
+              <li key={belt.id} className="rise-item" style={delay(index, 45)}>
                 <Link href={`/ueben?gurt=${belt.id}`}>
-                  <i style={{ background: belt.clothEnd ? `linear-gradient(90deg, ${belt.cloth}, ${belt.clothEnd})` : belt.cloth }} />
+                  <i
+                    style={{
+                      background: belt.clothEnd
+                        ? `linear-gradient(90deg, ${belt.cloth}, ${belt.clothEnd})`
+                        : belt.cloth,
+                    }}
+                  />
                   <span>{belt.name}</span>
                   <small>{belt.kyu}</small>
                 </Link>
               </li>
             ))}
           </ol>
-          <p className="landing-more">
+          <p className="landing-more rise-item" style={delay(6, 40)}>
             <Link href="/bibliothek">Bibliothek</Link>
             <Link href="/weg">Gürtelweg lesen</Link>
             <Link href="/plan">Wochenplan</Link>
@@ -97,12 +165,14 @@ export function Landing() {
           </p>
         </section>
 
-        <section className="landing-library" aria-labelledby="landing-library-title">
-          <p className="eyebrow">Zum Nachlesen</p>
-          <h2 id="landing-library-title">Mehr als die Übungsliste</h2>
+        <section ref={libraryRef} className="landing-library reveal" aria-labelledby="landing-library-title">
+          <div className="rise-item" style={delay(0)}>
+            <p className="eyebrow">Zum Nachlesen</p>
+            <h2 id="landing-library-title">Mehr als die Übungsliste</h2>
+          </div>
           <ul className="library-grid">
-            {LIBRARY.map((item) => (
-              <li key={item.href}>
+            {LIBRARY.map((item, index) => (
+              <li key={item.href} className="rise-item" style={delay(index, 80)}>
                 <Link href={item.href}>
                   <strong>{item.title}</strong>
                   <span>{item.text}</span>
@@ -112,16 +182,32 @@ export function Landing() {
           </ul>
         </section>
 
-        <section className="reviews" aria-label="Stimmen">
-          <p className="eyebrow">{SOCIAL.users} Judoka</p>
-          <h2>Das sagen Leute, die schon trainieren</h2>
+        <section ref={reviewsRef} className="reviews reveal" aria-label="Stimmen">
+          <div className="rise-item" style={delay(0)}>
+            <p className="eyebrow">{SOCIAL.users} Judoka</p>
+            <h2>Das sagen Leute, die schon trainieren</h2>
+          </div>
+          <div className="review-marquee" aria-hidden="true">
+            <div className="review-track">
+              {loop.map((review, index) => (
+                <p className="review-chip" key={`${review.name}-${index}`}>
+                  <span>{review.text}</span>
+                  <strong>
+                    {review.name} · {review.belt}
+                  </strong>
+                </p>
+              ))}
+            </div>
+          </div>
           <div className="review-grid">
-            {REVIEWS.map((review) => (
-              <blockquote key={review.name} className="review">
+            {REVIEWS.map((review, index) => (
+              <blockquote key={review.name} className="review rise-item" style={delay(index, 55)}>
                 <p>{review.text}</p>
                 <footer>
                   <strong>{review.name}</strong>
-                  <span>{review.belt}</span>
+                  <span>
+                    {review.belt} · {review.place}
+                  </span>
                 </footer>
               </blockquote>
             ))}
