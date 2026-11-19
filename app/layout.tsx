@@ -115,7 +115,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#f3eee4",
+  themeColor: "#f6f7f9",
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
@@ -133,11 +133,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           afterSignOutUrl="/"
           appearance={{
             variables: {
-              colorPrimary: "#16130f",
-              colorDanger: "#c4452d",
-              colorBackground: "#fbf7f0",
-              colorForeground: "#16130f",
-              borderRadius: "2px",
+              colorPrimary: "#1a1d23",
+              colorDanger: "#9e2a2b",
+              colorBackground: "#ffffff",
+              colorForeground: "#1a1d23",
+              borderRadius: "12px",
               fontFamily: "Outfit, sans-serif",
             },
           }}

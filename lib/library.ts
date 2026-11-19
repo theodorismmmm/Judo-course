@@ -1,10 +1,5 @@
 export const LIBRARY = [
   {
-    href: "/sprechen",
-    title: "Sprechen",
-    text: "YouTube-Lehrfilm, dann sagst du den japanischen Namen. Dafür gibt es XP.",
-  },
-  {
     href: "/suche",
     title: "Suche",
     text: "Seoi eintippen und jeden passenden Wurf sehen, über alle Gürtel.",
@@ -91,10 +86,6 @@ export const EXAM_STEPS = [
   {
     title: "Filme ansehen",
     text: "Jede Technik hat einen Lehrfilm oder die vier Schritte als Text. Einmal langsam, einmal mit dem Namen laut.",
-  },
-  {
-    title: "Namen laut sagen",
-    text: "Unter Sprechen läuft ein kurzer Film. Du sagst den japanischen Namen ins Mikrofon. Liegt die Erkennung daneben, zählt eine ähnliche Schreibweise trotzdem.",
   },
   {
     title: "Karten mischen",

@@ -5,7 +5,7 @@ import { BELTS } from "@/lib/belts";
 import { levelFor, streakLabel } from "@/lib/practice";
 import { usePractice } from "./usePractice";
 
-export function PracticeMeter({ redirect = "/sprechen" }: { redirect?: string }) {
+export function PracticeMeter({ redirect = "/pruefung" }: { redirect?: string }) {
   const { practice, ready, isSignedIn } = usePractice();
   if (!ready) return <p className="stat-row">XP werden geladen …</p>;
   const levels = BELTS.filter((belt) => (practice.beltPoints[belt.id] ?? 0) > 0);

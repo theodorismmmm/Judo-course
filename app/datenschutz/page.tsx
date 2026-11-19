@@ -5,7 +5,7 @@ import { OPERATOR } from "@/lib/legal";
 
 export const metadata: Metadata = {
   title: "Datenschutz",
-  description: "Datenschutzerklärung von JudoNOW: Konto, Mikrofon, Übungsstand, Trainergruppe und YouTube.",
+  description: "Datenschutzerklärung von JudoNOW: Konto, Übungsstand, Trainergruppe und YouTube.",
   alternates: { canonical: "/datenschutz" },
 };
 
@@ -33,14 +33,10 @@ export default function Page() {
           Clerk sitzt in den USA. Für Daten, die das Land verlassen, gelten die von Clerk bereitgestellten
           EU-Standardverträge. Die Datenschutzhinweise von Clerk stehen auf clerk.com.
         </p>
-        <h2>Mikrofon</h2>
+        <h2>Anhören</h2>
         <p>
-          Unter Sprechen fragt ein Button nach dem Mikrofon, danach zeigt der Browser seine Erlaubnis. Der kurz geöffnete
-          Tonkanal wird sofort wieder geschlossen. Während du sprichst, geht die Aufnahme an die Spracherkennung des
-          Browsers.
-          Chrome schickt sie dafür in der Regel an Google, Safari an Apple. JudoNOW bekommt die Aufnahme nicht. Im
-          Browser bleibt nur, ob der Name richtig oder falsch war: der Technik-Kürzel und die Anzahl, nicht der
-          gesprochene Satz. Die Erlaubnis erteilst du im Browser. Ohne Mikrofon kannst du den Namen eintippen.
+          Der Button „Anhören“ spricht den japanischen Namen mit der Stimme des Geräts vor. Dafür nimmt die Seite kein
+          Mikrofon auf und speichert keine Aufnahme.
         </p>
         <h2>Auf diesem Gerät</h2>
         <p>
@@ -57,9 +53,7 @@ export default function Page() {
         </p>
         <h2>Filme</h2>
         <p>
-          Lehrfilme sind YouTube-Einbindungen über youtube-nocookie.com. Unter Sprechen liegt eine eigene Fläche über
-          dem Titel des Players und über dem Namensschild im Bild, damit die Vorschau den Namen nicht verrät. Beim
-          Abspielen kann Google die IP-Adresse und
+          Lehrfilme sind YouTube-Einbindungen über youtube-nocookie.com. Beim Abspielen kann Google die IP-Adresse und
           Geräteangaben verarbeiten. Solange du den Film nicht startest, bleibt der eingebettete Player auf der
           Technikseite die Verbindung zu YouTube.
         </p>
