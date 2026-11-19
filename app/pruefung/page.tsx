@@ -7,7 +7,7 @@ import { EXAM_STEPS } from "@/lib/library";
 
 export const metadata: Metadata = {
   title: "Prüfung",
-  description: "Probetest pro Gürtel, mit Punkten und den Techniken, die noch fehlen. Dazu die Woche vor der Prüfung.",
+  description: "Probetest pro Gürtel, mit XP und den Techniken, die noch fehlen. Dazu die Woche vor der Prüfung.",
   alternates: { canonical: "/pruefung" },
 };
 

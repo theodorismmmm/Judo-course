@@ -226,26 +226,18 @@ export function TechniqueFilm({
   mirror,
   label,
   mode,
-  autoPlay = false,
 }: {
   motion: MotionId;
   steps: Step[];
   mirror?: boolean;
   label: string;
   mode: "still" | "player";
-  autoPlay?: boolean;
 }) {
   const frames = MOTIONS[motion];
   const patternId = useId().replace(/:/g, "");
   const poster = Math.min(2, frames.length - 1);
   const [progress, setProgress] = useState(mode === "still" ? poster : 0);
   const [playing, setPlaying] = useState(false);
-
-  useEffect(() => {
-    if (mode !== "player" || !autoPlay) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    setPlaying(true);
-  }, [autoPlay, mode]);
 
   useEffect(() => {
     if (!playing || mode !== "player") return;

@@ -5,17 +5,19 @@ import { useUser } from "@clerk/nextjs";
 import { useEffect, useRef, useState } from "react";
 import { getTechnique, techniques } from "@/lib/catalog";
 import { readProfile } from "@/lib/profile";
-import { applyResult, levelFor, weakSlugs, type Practice } from "@/lib/practice";
+import { applyResult, levelFor, streakLabel, weakSlugs, type Practice } from "@/lib/practice";
 import { matchesAny } from "@/lib/speech";
-import type { BeltId, Step, Technique } from "@/lib/types";
-import { PracticeMeter } from "./PracticeMeter";
+import type { BeltId } from "@/lib/types";
 import { SayAloud, speakAloud } from "./SayAloud";
 import { SiteFooter } from "./SiteFooter";
 import { SiteHeader } from "./SiteHeader";
-import { TechniqueFilm } from "./TechniqueFilm";
 import { usePractice } from "./usePractice";
 
+const LESSON = 5;
+
 type Status = "idle" | "listening" | "right" | "wrong";
+type Mic = "ask" | "asking" | "granted" | "denied" | "missing" | "skipped";
+type Mark = "right" | "miss";
 
 type Heard = { transcript: string };
 
@@ -51,23 +53,22 @@ function micNote(error: string) {
   return "Das hat nicht geklappt. Versuch es noch einmal oder tipp den Namen.";
 }
 
-function pickSlug(practice: Practice, belt: BeltId | null, avoid?: string) {
-  const throws = techniques.filter((technique) => technique.category === "wurf");
+function buildLesson(practice: Practice, belt: BeltId | null) {
+  const throws = techniques.filter((technique) => technique.category === "wurf" && technique.youtube);
   const scoped = belt ? throws.filter((technique) => technique.belt === belt) : throws;
-  const pool = (scoped.length ? scoped : throws).filter((technique) => technique.slug !== avoid);
-  const usable = pool.length ? pool : throws;
-  const weak = weakSlugs(practice).filter((item) => usable.some((technique) => technique.slug === item));
-  if (weak.length && Math.random() < 0.6) return weak[Math.floor(Math.random() * weak.length)];
-  return usable[Math.floor(Math.random() * usable.length)]?.slug ?? "";
-}
-
-function quietSteps(technique: Technique): Step[] {
-  const names = [technique.reading, technique.jp, technique.de, technique.kanji].filter((name) => name.length > 2);
-  return technique.steps.map((step) => {
-    let text = step.text;
-    for (const name of names) text = text.split(name).join("dieser Wurf");
-    return { ...step, text };
-  });
+  const pool = scoped.length >= LESSON ? scoped : throws;
+  const picked: string[] = [];
+  for (const slug of weakSlugs(practice)) {
+    if (picked.length >= 2) break;
+    if (pool.some((technique) => technique.slug === slug)) picked.push(slug);
+  }
+  const rest = pool.filter((technique) => !picked.includes(technique.slug));
+  while (picked.length < LESSON && rest.length) {
+    const index = Math.floor(Math.random() * rest.length);
+    const next = rest.splice(index, 1)[0];
+    if (next) picked.push(next.slug);
+  }
+  return picked;
 }
 
 export function SpeakRoom() {
@@ -75,40 +76,80 @@ export function SpeakRoom() {
   const { practice, ready, save } = usePractice();
   const practiceRef = useRef(practice);
   practiceRef.current = practice;
-  const [slug, setSlug] = useState("o-soto-gari");
-  const [booted, setBooted] = useState(false);
+  const [mic, setMic] = useState<Mic>("ask");
+  const [slugs, setSlugs] = useState<string[]>([]);
+  const [index, setIndex] = useState(0);
+  const [done, setDone] = useState(false);
+  const [results, setResults] = useState<Mark[]>([]);
+  const [roundXp, setRoundXp] = useState(0);
+  const [gain, setGain] = useState(0);
   const [status, setStatus] = useState<Status>("idle");
   const [heard, setHeard] = useState("");
   const [tries, setTries] = useState(0);
   const [note, setNote] = useState("");
   const [typed, setTyped] = useState("");
+  const [typing, setTyping] = useState(false);
   const [supported, setSupported] = useState(true);
   const recogRef = useRef<Recog | null>(null);
   const triesRef = useRef(0);
+  const busyRef = useRef(false);
   triesRef.current = tries;
 
   const belt = isLoaded && isSignedIn ? readProfile(user?.unsafeMetadata).belt : null;
-  const technique = slug ? getTechnique(slug) : undefined;
+  const technique = slugs[index] ? getTechnique(slugs[index]) : undefined;
+  const playing = mic === "granted" || mic === "skipped";
 
   useEffect(() => {
     setSupported(recognitionCtor() !== null);
   }, []);
 
   useEffect(() => {
-    if (!ready || !isLoaded || booted) return;
-    setBooted(true);
-    const hasWeak = weakSlugs(practiceRef.current).length > 0;
-    if (!belt && !hasWeak) return;
-    setSlug(pickSlug(practiceRef.current, belt));
-  }, [ready, isLoaded, booted, belt]);
+    const perms = navigator.permissions;
+    if (!perms?.query) return;
+    let gone = false;
+    perms
+      .query({ name: "microphone" as PermissionName })
+      .then((status) => {
+        if (gone) return;
+        if (status.state === "granted") setMic("granted");
+        if (status.state === "denied") setMic("denied");
+      })
+      .catch(() => undefined);
+    return () => {
+      gone = true;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!ready || !isLoaded || !playing || slugs.length) return;
+    setSlugs(buildLesson(practiceRef.current, belt));
+  }, [ready, isLoaded, playing, slugs.length, belt]);
 
   useEffect(() => () => recogRef.current?.abort(), []);
 
+  async function askMic() {
+    if (!navigator.mediaDevices?.getUserMedia) {
+      setMic("missing");
+      return;
+    }
+    setMic("asking");
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      stream.getTracks().forEach((track) => track.stop());
+      setMic("granted");
+    } catch (error) {
+      const name = error instanceof DOMException ? error.name : "";
+      setMic(name === "NotFoundError" || name === "DevicesNotFoundError" ? "missing" : "denied");
+    }
+  }
+
   async function grade(lines: string[]) {
-    if (!technique) return;
+    if (!technique || busyRef.current || status === "right") return;
+    busyRef.current = true;
     const source = { slug: technique.slug, reading: technique.reading, jp: technique.jp };
     const ok = matchesAny(lines, source);
     const firstTry = triesRef.current === 0;
+    const before = practiceRef.current.points;
     const next = applyResult(practiceRef.current, {
       slug: technique.slug,
       belt: technique.belt,
@@ -117,19 +158,27 @@ export function SpeakRoom() {
     });
     setHeard(lines.find((line) => line.trim()) ?? "");
     setStatus(ok ? "right" : "wrong");
-    if (!ok) speakAloud(technique.reading, technique.kanji);
+    setGain(next.points - before);
+    if (ok) setRoundXp((current) => current + (next.points - before));
+    if (!ok) {
+      setTries((current) => current + 1);
+      speakAloud(technique.reading, technique.kanji);
+    }
     try {
       await save(next);
     } catch {
-      setNote("Der Punktestand ist nur auf diesem Gerät gelandet.");
+      setNote("Die XP sind nur auf diesem Gerät gelandet.");
+    } finally {
+      busyRef.current = false;
     }
   }
 
   function listen() {
     const Ctor = recognitionCtor();
-    if (!Ctor || !technique) {
+    if (!Ctor || !technique || mic !== "granted") {
       setSupported(false);
-      setNote("Dieser Browser hat keine Spracherkennung. Tipp den Namen unten.");
+      setTyping(true);
+      setNote("Dieser Browser hat keine Spracherkennung. Tipp den Namen.");
       return;
     }
     recogRef.current?.abort();
@@ -143,8 +192,8 @@ export function SpeakRoom() {
       const result = event.results[0];
       const lines: string[] = [];
       if (result) {
-        for (let index = 0; index < result.length; index += 1) {
-          const line = result[index]?.transcript;
+        for (let alt = 0; alt < result.length; alt += 1) {
+          const line = result[alt]?.transcript;
           if (line) lines.push(line);
         }
       }
@@ -179,154 +228,203 @@ export function SpeakRoom() {
     setStatus("idle");
   }
 
-  function retry() {
-    setStatus("idle");
-    setHeard("");
-    setNote("");
-    setTries((current) => current + 1);
-  }
-
-  function nextThrow() {
+  function advance(mark: Mark) {
+    recogRef.current?.abort();
+    setResults((current) => [...current, mark]);
     setStatus("idle");
     setHeard("");
     setNote("");
     setTyped("");
+    setTyping(false);
     setTries(0);
-    setSlug(pickSlug(practiceRef.current, belt, technique?.slug));
+    setGain(0);
+    if (index + 1 >= slugs.length) setDone(true);
+    else setIndex((current) => current + 1);
   }
 
-  const weak = weakSlugs(practice, 5)
-    .map((item) => getTechnique(item))
-    .filter((item): item is Technique => Boolean(item && item.category === "wurf"));
-  const revealed = status === "right" || status === "wrong";
+  function again() {
+    setDone(false);
+    setSlugs(buildLesson(practiceRef.current, belt));
+    setIndex(0);
+    setResults([]);
+    setRoundXp(0);
+    setGain(0);
+    setStatus("idle");
+    setHeard("");
+    setNote("");
+    setTyped("");
+    setTyping(false);
+    setTries(0);
+  }
+
+  const level = belt ? levelFor(practice.beltPoints[belt] ?? 0) : null;
 
   return (
     <div className="dojo">
       <SiteHeader />
-      <section className="mat speak" id="inhalt">
-        <p className="eyebrow">Namen laut</p>
-        <h1>Sprechen</h1>
-        <p className="deck">
-          Du siehst einen kurzen Wurf und sagst den japanischen Namen, so wie im Dojo. Die Seite hört über das Mikrofon
-          zu. Chrome und Safari erkennen japanische Wörter nicht immer perfekt, deshalb zählt eine ähnliche Schreibweise
-          mit.
-        </p>
-        <PracticeMeter />
-        {belt && (
-          <p className="known-line">
-            {belt ? `Level ${levelFor(practice.beltPoints[belt] ?? 0)} auf deinem Gürtel.` : ""} Würfe, die oft daneben
-            lagen, kommen öfter wieder.
+      <section className="mat lesson" id="inhalt">
+        <h1 className="lesson-title">Sprechen</h1>
+        <div className="xp-bar">
+          <div className="xp-track" aria-hidden="true">
+            {Array.from({ length: LESSON }, (_, slot) => (
+              <span key={slot} className={results[slot] ? `is-${results[slot]}` : ""} />
+            ))}
+          </div>
+          <p className="xp-pill">
+            {ready ? `${practice.points} XP` : "XP …"}
+            {gain > 0 && status === "right" ? <strong>+{gain}</strong> : null}
           </p>
-        )}
+        </div>
+        <p className="lesson-meta">
+          {streakLabel(practice)}
+          {level !== null ? ` · Level ${level}` : ""}
+        </p>
 
-        {!technique ? (
-          <p className="loading">Der nächste Wurf wird gemischt …</p>
+        {!playing ? (
+          <div className="lesson-card">
+            <div className="lesson-body">
+              <p className="prompt">Mikrofon erlauben</p>
+              <p className="lesson-copy">
+                Die Lektion spielt den echten Lehrfilm und hört dann, ob du den japanischen Namen richtig sagst. Dafür
+                fragt der Browser nach dem Mikrofon. Es wird nichts gespeichert.
+              </p>
+              {mic === "denied" && (
+                <p className="lock-note">
+                  Der Browser hat das Mikrofon blockiert. Du kannst es in den Seiteneinstellungen erlauben oder die
+                  Namen tippen.
+                </p>
+              )}
+              {mic === "missing" && <p className="lock-note">Hier ist kein Mikrofon zu finden. Du kannst die Namen tippen.</p>}
+              <button type="button" className="cta lesson-go" disabled={mic === "asking"} onClick={() => void askMic()}>
+                {mic === "asking" ? "Browser fragt …" : "Mikrofon erlauben"}
+              </button>
+              <button type="button" className="cta cta-ghost" onClick={() => setMic("skipped")}>
+                Namen tippen
+              </button>
+            </div>
+          </div>
+        ) : done ? (
+          <div className="lesson-card">
+            <div className="lesson-body">
+              <p className="prompt">Lektion geschafft</p>
+              <p className="xp-pop">+{roundXp} XP</p>
+              <p className="lesson-copy">
+                {roundXp > 0
+                  ? `${results.filter((mark) => mark === "right").length} von ${LESSON} Namen richtig. Die nächste Runde nimmt Würfe, die oft daneben lagen.`
+                  : "Diesmal ohne Treffer. Die nächste Runde nimmt dieselben Würfe noch einmal."}
+              </p>
+              <button type="button" className="cta lesson-go" onClick={again}>
+                Noch eine Lektion
+              </button>
+              {!isSignedIn && (
+                <p className="known-line">
+                  <Link href="/sign-in?redirect_url=%2Fsprechen">Anmelden</Link>, dann sind die XP auch auf dem anderen
+                  Handy da.
+                </p>
+              )}
+            </div>
+          </div>
+        ) : !technique ? (
+          <p className="loading">Die Lektion wird gemischt …</p>
         ) : (
-          <div className="speak-stage">
-            <TechniqueFilm
-              key={technique.slug}
-              motion={technique.motion}
-              steps={quietSteps(technique)}
-              mirror={technique.mirror}
-              label="Wurf"
-              mode="player"
-              autoPlay
-            />
-            <div className="speak-panel">
+          <div className="lesson-card">
+            <figure className="yt lesson-video">
+              <div className="yt-frame">
+                <iframe
+                  key={technique.youtube}
+                  src={`https://www.youtube-nocookie.com/embed/${technique.youtube}?rel=0`}
+                  title="Lehrfilm"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                  referrerPolicy="strict-origin-when-cross-origin"
+                />
+              </div>
+              <figcaption>Lehrfilm · {technique.videoBy ?? "YouTube"}</figcaption>
+            </figure>
+            <div className="lesson-body">
               <p className="prompt">Wie heißt dieser Wurf?</p>
               {status === "listening" ? (
-                <button type="button" className="cta" onClick={stop}>
+                <button type="button" className="mic-button is-live" onClick={stop}>
                   Stopp
                 </button>
-              ) : status === "idle" ? (
-                <button type="button" className="cta" onClick={listen}>
-                  Namen sagen
+              ) : status === "idle" && mic === "granted" ? (
+                <button type="button" className="mic-button" onClick={listen}>
+                  Sagen
                 </button>
               ) : null}
-              {status === "listening" && <p className="known-line">Ich höre zu …</p>}
+              {status === "listening" && <p className="lesson-copy">Ich höre zu …</p>}
               {note && <p className="lock-note">{note}</p>}
               {status === "right" && (
-                <div className="speak-result">
+                <div className="feedback is-right" role="status">
+                  <p className="xp-pop">+{gain} XP</p>
                   <p>
                     Richtig. <strong>{technique.reading}</strong>.
-                    {tries === 0 ? " +10 Punkte." : " +4 Punkte."}
                   </p>
                   <SayAloud reading={technique.reading} kanji={technique.kanji} />
-                  <button type="button" className="cta" onClick={nextThrow}>
-                    Nächster Wurf
+                  <button type="button" className="cta lesson-go" onClick={() => advance("right")}>
+                    Weiter
                   </button>
                 </div>
               )}
               {status === "wrong" && (
-                <div className="speak-result">
+                <div className="feedback is-wrong" role="status">
                   <p>
                     Noch nicht. Richtig ist <strong>{technique.reading}</strong>.
                     {heard ? ` Gehört: „${heard}“.` : ""}
                   </p>
                   <SayAloud reading={technique.reading} kanji={technique.kanji} label="Aussprache anhören" />
-                  <div className="speak-actions">
-                    <button type="button" className="cta" onClick={retry}>
-                      Nochmal versuchen
+                  <div className="lesson-actions">
+                    <button
+                      type="button"
+                      className="cta lesson-go"
+                      onClick={() => {
+                        setStatus("idle");
+                        setHeard("");
+                        setNote("");
+                      }}
+                    >
+                      Nochmal
                     </button>
-                    <button type="button" className="cta cta-ghost" onClick={nextThrow}>
+                    <button type="button" className="cta cta-ghost" onClick={() => advance("miss")}>
                       Weiter
                     </button>
                   </div>
                 </div>
               )}
-              <form
-                className="speak-type"
-                onSubmit={(event) => {
-                  event.preventDefault();
-                  if (!typed.trim() || status === "listening") return;
-                  void grade([typed]);
-                }}
-              >
-                <label>
-                  {supported ? "Oder tippen" : "Name eintippen"}
-                  <input
-                    value={typed}
-                    onChange={(event) => setTyped(event.target.value)}
-                    placeholder="Japanischer Name"
-                    autoComplete="off"
-                  />
-                </label>
-                <button type="submit" className="cta cta-ghost">
-                  Prüfen
+              {(typing || mic !== "granted" || !supported) && status !== "right" && (
+                <form
+                  className="speak-type"
+                  onSubmit={(event) => {
+                    event.preventDefault();
+                    if (!typed.trim() || status === "listening") return;
+                    void grade([typed]);
+                  }}
+                >
+                  <label>
+                    Japanischer Name
+                    <input
+                      value={typed}
+                      onChange={(event) => setTyped(event.target.value)}
+                      placeholder="Name"
+                      autoComplete="off"
+                    />
+                  </label>
+                  <button type="submit" className="cta lesson-go">
+                    Prüfen
+                  </button>
+                </form>
+              )}
+              {mic === "granted" && supported && !typing && status === "idle" && (
+                <button type="button" className="text-link" onClick={() => setTyping(true)}>
+                  Lieber tippen
                 </button>
-              </form>
-              {revealed && (
+              )}
+              {(status === "right" || status === "wrong") && (
                 <p className="known-line">
                   <Link href={`/technik/${technique.slug}`}>Zur Technikseite</Link>
-                  {technique.youtube ? ", dort liegt auch der Lehrfilm." : "."}
                 </p>
               )}
             </div>
-          </div>
-        )}
-
-        {weak.length > 0 && (
-          <div className="weak-list">
-            <h2>Oft daneben</h2>
-            <ul>
-              {weak.map((item) => (
-                <li key={item.slug}>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setSlug(item.slug);
-                      setStatus("idle");
-                      setTries(0);
-                      setHeard("");
-                      setNote("");
-                    }}
-                  >
-                    {item.reading}
-                  </button>
-                  <span>{practice.misses[item.slug]} mal</span>
-                </li>
-              ))}
-            </ul>
           </div>
         )}
       </section>

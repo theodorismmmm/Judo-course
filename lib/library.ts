@@ -2,7 +2,7 @@ export const LIBRARY = [
   {
     href: "/sprechen",
     title: "Sprechen",
-    text: "Kurzer Film, dann sagst du den japanischen Namen. Ähnliche Schreibweisen zählen.",
+    text: "YouTube-Lehrfilm, dann sagst du den japanischen Namen. Dafür gibt es XP.",
   },
   {
     href: "/suche",
@@ -22,7 +22,7 @@ export const LIBRARY = [
   {
     href: "/pruefung",
     title: "Prüfung",
-    text: "Probetest pro Gürtel, mit Punkten und den Techniken, die noch fehlen.",
+    text: "Probetest pro Gürtel, mit XP und den Techniken, die noch fehlen.",
   },
   {
     href: "/regeln",

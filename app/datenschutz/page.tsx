@@ -25,7 +25,7 @@ export default function Page() {
         <h2>Konto</h2>
         <p>
           Wenn du dich anmeldest, läuft das über Clerk. Gespeichert werden die Anmeldedaten, die Clerk dafür braucht,
-          zum Beispiel E-Mail und Name, dazu in deinem Konto dein Gürtel, deine Ziele, die abgehakten Würfe, Punkte,
+          zum Beispiel E-Mail und Name, dazu in deinem Konto dein Gürtel, deine Ziele, die abgehakten Würfe, XP,
           Serie, das Prüfungsdatum und, falls du einer Gruppe beitrittst, der Gruppencode. Rechtsgrundlage ist der
           Vertrag über das Konto, Art. 6 Abs. 1 lit. b DSGVO. Ohne Konto bleibt der Stand nur auf diesem Gerät.
         </p>
@@ -35,7 +35,9 @@ export default function Page() {
         </p>
         <h2>Mikrofon</h2>
         <p>
-          Unter Sprechen fragt der Browser nach dem Mikrofon. Die Aufnahme geht an die Spracherkennung des Browsers.
+          Unter Sprechen fragt ein Button nach dem Mikrofon, danach zeigt der Browser seine Erlaubnis. Der kurz geöffnete
+          Tonkanal wird sofort wieder geschlossen. Während du sprichst, geht die Aufnahme an die Spracherkennung des
+          Browsers.
           Chrome schickt sie dafür in der Regel an Google, Safari an Apple. JudoNOW bekommt die Aufnahme nicht. Im
           Browser bleibt nur, ob der Name richtig oder falsch war: der Technik-Kürzel und die Anzahl, nicht der
           gesprochene Satz. Die Erlaubnis erteilst du im Browser. Ohne Mikrofon kannst du den Namen eintippen.
@@ -48,7 +50,7 @@ export default function Page() {
         <h2>Trainergruppe</h2>
         <p>
           Wer eine Gruppe anlegt, sieht von beigetretenen Konten den Vornamen, den Gürtel, die Zahl der abgehakten
-          Techniken, Punkte, Serie und bis zu sechs offene Würfe. Keine E-Mail-Adresse. Für Kinder im Verein sollen die
+          Techniken, XP, Serie und bis zu sechs offene Würfe. Keine E-Mail-Adresse. Für Kinder im Verein sollen die
           Eltern das Konto kennen und den Beitritt erlauben. Du kannst die Gruppe jederzeit verlassen. Rechtsgrundlage
           ist deine Einwilligung, Art. 6 Abs. 1 lit. a DSGVO, die du mit dem Beitritt gibst und durch Verlassen
           zurücknimmst.

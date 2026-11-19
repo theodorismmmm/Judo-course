@@ -81,7 +81,7 @@ export function TrainerRoom() {
         <h1>Trainer</h1>
         <p className="deck">
           Du legst eine Gruppe an und gibst den Code weiter. Die Judoka melden sich an, treten bei, und du siehst Gürtel,
-          Punkte und welche Würfe noch offen sind.
+          XP und welche Würfe noch offen sind.
         </p>
         <p className="lock-note">
           Für Kinder nur mit Wissen der Eltern. Sichtbar sind Vorname, Gürtel und Übungsstand, keine E-Mail-Adresse.
@@ -116,7 +116,7 @@ export function TrainerRoom() {
                     <div>
                       <strong>{member.name}</strong>
                       <span>
-                        {member.beltName ?? "ohne Gürtel"} · {member.known} abgehakt · {member.points} Punkte · Serie{" "}
+                        {member.beltName ?? "ohne Gürtel"} · {member.known} abgehakt · {member.points} XP · Serie{" "}
                         {member.streak}
                       </span>
                       {member.openThrows.length > 0 && <span>Offen: {member.openThrows.join(", ")}</span>}
