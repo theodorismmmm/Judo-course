@@ -11,11 +11,10 @@ import { AccountSlot } from "./AccountSlot";
 import { SiteFooter } from "./SiteFooter";
 
 const ROOMS = [
-  { href: "/ueben", index: "01", title: "Übungen", text: "Farbe wählen. Nur der Rang, den du prüfst — Gelb bleibt Gelb." },
-  { href: "/sprechen", index: "02", title: "Sprechen", text: "Kurzer Wurf, dann sagst du den japanischen Namen laut." },
-  { href: "/filme", index: "03", title: "Filme", text: "Lehrfilme der Reihe nach, Name japanisch." },
-  { href: "/karten", index: "04", title: "Karten", text: "Beschreibung lesen, den passenden Namen legen." },
-  { href: "/workout", index: "05", title: "Workout", text: "Aufwärmen vor dem Judo, mit Matte oder ohne, plus HIIT." },
+  { href: "/ueben", index: "01", title: "Übungen", text: "Farbe wählen. Nur der Rang, den du prüfst." },
+  { href: "/filme", index: "02", title: "Filme", text: "Lehrfilme der Reihe nach, Name japanisch." },
+  { href: "/karten", index: "03", title: "Karten", text: "Beschreibung lesen, den passenden Namen legen." },
+  { href: "/pruefung", index: "04", title: "Prüfung", text: "Probetest pro Gürtel und die Woche davor." },
 ];
 
 function delay(index: number, step = 70) {
@@ -51,8 +50,6 @@ function useReveal<T extends HTMLElement>() {
 export function Landing() {
   const { isLoaded, isSignedIn, user } = useUser();
   const router = useRouter();
-  const photoRef = useRef<HTMLImageElement>(null);
-  const barRef = useRef<HTMLDivElement>(null);
   const roomsRef = useReveal<HTMLElement>();
   const pathRef = useReveal<HTMLElement>();
   const libraryRef = useReveal<HTMLElement>();
@@ -63,33 +60,8 @@ export function Landing() {
     router.replace(profile.onboarded ? "/ueben" : "/starten");
   }, [isLoaded, isSignedIn, router, user]);
 
-  useEffect(() => {
-    const photo = photoRef.current;
-    const bar = barRef.current;
-    if (!photo || !bar) return;
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduce) return;
-    let frame = 0;
-    const onScroll = () => {
-      cancelAnimationFrame(frame);
-      frame = requestAnimationFrame(() => {
-        const y = window.scrollY;
-        const max = document.documentElement.scrollHeight - window.innerHeight;
-        bar.style.transform = `scaleX(${max > 0 ? Math.min(y / max, 1) : 0})`;
-        photo.style.transform = `translateY(${Math.min(y, 520) * 0.08}px) scale(1.06)`;
-      });
-    };
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => {
-      cancelAnimationFrame(frame);
-      window.removeEventListener("scroll", onScroll);
-    };
-  }, []);
-
   return (
     <main id="inhalt" className="landing">
-      <div ref={barRef} className="scroll-progress" aria-hidden="true" />
       <div className="landing-shell">
         <header className="landing-bar">
           <Link href="/" className="wordmark brand-mark">
@@ -125,7 +97,7 @@ export function Landing() {
             </form>
           </div>
           <figure className="landing-photo">
-            <img ref={photoRef} src="/images/landing-hero.jpg" alt="Zwei Judoka auf der Matte beim Wurf" />
+            <img src="/images/landing-hero.jpg" alt="Zwei Judoka auf der Matte beim Wurf" />
           </figure>
         </section>
 
@@ -171,7 +143,7 @@ export function Landing() {
 
         <section ref={libraryRef} className="landing-library reveal" aria-labelledby="landing-library-title">
           <div className="rise-item" style={delay(0)}>
-            <p className="eyebrow">Sprechen, Plan, Regeln</p>
+            <p className="eyebrow">Plan, Prüfung, Regeln</p>
             <h2 id="landing-library-title">Mehr als die Übungsliste</h2>
           </div>
           <ul className="library-grid">

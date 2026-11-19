@@ -169,8 +169,6 @@ export function Dojo() {
                   {accountLoaded && isSignedIn
                     ? `${knownHere} von ${throwsHere.length} Würfen hier schon abgehakt.`
                     : "Mit einem Konto hakst du die Würfe ab, die du schon kannst. Der Stand ist dann auch auf dem anderen Handy da."}{" "}
-                  <Link href="/sprechen">Namen sagen</Link>
-                  {" · "}
                   <Link href={`/pruefung?gurt=${belt.id}`}>Probetest</Link>
                 </p>
               )}

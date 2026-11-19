@@ -113,8 +113,7 @@ export function ExamPlan() {
             ))}
           </div>
           <p className="known-line">
-            Die Namen dazu laut unter <Link href="/sprechen">Sprechen</Link>, der Probetest unter{" "}
-            <Link href={`/pruefung?gurt=${beltId}`}>Prüfung</Link>.
+            Der Probetest liegt unter <Link href={`/pruefung?gurt=${beltId}`}>Prüfung</Link>.
           </p>
         </>
       )}

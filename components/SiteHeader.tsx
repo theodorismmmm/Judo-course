@@ -7,7 +7,6 @@ import { AccountSlot } from "./AccountSlot";
 
 const TABS = [
   { href: "/ueben", label: "Übungen", short: "Üben" },
-  { href: "/sprechen", label: "Sprechen", short: "Sagen" },
   { href: "/filme", label: "Filme", short: "Filme" },
   { href: "/workout", label: "Workout", short: "Fit" },
   { href: "/karten", label: "Karten", short: "Karten" },
