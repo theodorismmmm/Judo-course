@@ -80,6 +80,7 @@ export const VIDEOS: Record<string, VideoCredit> = {
   "yama-arashi": kodokan("MGlyKmSuzdc"),
 
   "kesa-gatame": kodokan("NDaQuJOFBYk"),
+  "wechsel-kesa-yoko": kodokan("NDaQuJOFBYk"),
   "kata-gatame": kodokan("zQR3IOXxO_Q"),
   "kami-shiho-gatame": kodokan("HFuMjOv0WN8"),
   "kuzure-kami-shiho-gatame": kodokan("YUrogQWdwiY"),

@@ -57,7 +57,9 @@ export default function Page() {
         </p>
         <h2>Filme</h2>
         <p>
-          Lehrfilme sind YouTube-Einbindungen über youtube-nocookie.com. Beim Abspielen kann Google die IP-Adresse und
+          Lehrfilme sind YouTube-Einbindungen über youtube-nocookie.com. Unter Sprechen liegt eine eigene Fläche über
+          dem Titel des Players und über dem Namensschild im Bild, damit die Vorschau den Namen nicht verrät. Beim
+          Abspielen kann Google die IP-Adresse und
           Geräteangaben verarbeiten. Solange du den Film nicht startest, bleibt der eingebettete Player auf der
           Technikseite die Verbindung zu YouTube.
         </p>

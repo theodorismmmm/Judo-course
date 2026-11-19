@@ -72,7 +72,7 @@ export default function Page() {
     <Guide
       eyebrow="Drei Einheiten, ein Rang"
       title="Wochenpläne"
-      lead="Jede Einheit nimmt Techniken, die auf genau diesem Gürtel liegen. Danach der Film oder die vier gezeichneten Phasen, nicht eine neue Liste."
+      lead="Jede Einheit nimmt Techniken, die auf genau diesem Gürtel liegen. Danach der Film oder die vier Schritte, nicht eine neue Liste."
     >
       <ExamPlan />
       <h2>Pläne nach Farbe</h2>

@@ -22,7 +22,7 @@ export function SiteFooter() {
         Die Farben folgen der DJB-Reihenfolge von 2024: Weiß, Weiß-Gelb, Gelb, Gelb-Orange, Orange, Orange-Grün,
         Grün, Blau, Braun, dann 1. und 2. Dan. Vereine können die Prüfungsschwerpunkte anders setzen.
       </p>
-      <p>Lehrfilme laufen über YouTube. Der gezeichnete Ablauf darunter ist die Schrittfolge, wenn es keinen einzelnen Film gibt.</p>
+      <p>Lehrfilme laufen über YouTube. Unter Sprechen deckt die Seite den Namen in der Vorschau ab.</p>
       <p>Ein Konto merkt sich deine Ziele, deinen Gürtel, deine Häkchen, XP, Serie und das Prüfungsdatum.</p>
       <p>
         <a href="/sitemap.xml">XML-Sitemap</a>
