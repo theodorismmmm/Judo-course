@@ -1,15 +1,19 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { ExamRoom } from "@/components/ExamRoom";
 import { Guide } from "@/components/Guide";
+import { isBelt } from "@/lib/belts";
 import { EXAM_STEPS } from "@/lib/library";
 
 export const metadata: Metadata = {
   title: "Prüfung",
-  description: "So bereitest du die Gürtelprüfung mit JudoNOW vor: Rang wählen, Würfe abhaken, Filme und Karten.",
+  description: "Probetest pro Gürtel, mit Punkten und den Techniken, die noch fehlen. Dazu die Woche vor der Prüfung.",
   alternates: { canonical: "/pruefung" },
 };
 
-export default function Page() {
+export default async function Page({ searchParams }: { searchParams: Promise<{ gurt?: string }> }) {
+  const params = await searchParams;
+  const initialBelt = isBelt(params.gurt) ? params.gurt : null;
   return (
     <Guide
       eyebrow="Die Woche davor"
@@ -27,6 +31,7 @@ export default function Page() {
           </li>
         ))}
       </ol>
+      <ExamRoom initialBelt={initialBelt} />
       <p className="guide-note">
         Start unter <Link href="/ueben">Übungen</Link>, dann <Link href="/plan">Wochenplan</Link> und{" "}
         <Link href="/karten">Karten</Link>.

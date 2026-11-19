@@ -6,14 +6,28 @@ import type { ReactNode } from "react";
 import { AccountSlot } from "./AccountSlot";
 
 const TABS = [
-  { href: "/ueben", label: "Übungen" },
-  { href: "/filme", label: "Filme" },
-  { href: "/workout", label: "Workout" },
-  { href: "/karten", label: "Karten" },
-  { href: "/bibliothek", label: "Mehr" },
+  { href: "/ueben", label: "Übungen", short: "Üben" },
+  { href: "/sprechen", label: "Sprechen", short: "Sagen" },
+  { href: "/filme", label: "Filme", short: "Filme" },
+  { href: "/workout", label: "Workout", short: "Fit" },
+  { href: "/karten", label: "Karten", short: "Karten" },
+  { href: "/bibliothek", label: "Mehr", short: "Mehr" },
 ];
 
-const READING = ["/bibliothek", "/weg", "/plan", "/glossar", "/pruefung", "/sicherheit", "/uebersicht"];
+const READING = [
+  "/bibliothek",
+  "/weg",
+  "/plan",
+  "/glossar",
+  "/pruefung",
+  "/sicherheit",
+  "/uebersicht",
+  "/suche",
+  "/regeln",
+  "/trainer",
+  "/impressum",
+  "/datenschutz",
+];
 
 function current(path: string, href: string) {
   if (href === "/ueben") return path.startsWith("/ueben") || path.startsWith("/technik");
@@ -45,7 +59,7 @@ export function SiteHeader({ trailing }: { trailing?: ReactNode }) {
       <nav className="phone-dock" aria-label="Hauptbereiche">
         {TABS.map((tab) => (
           <Link key={tab.href} href={tab.href} aria-current={current(path, tab.href) ? "page" : undefined}>
-            {tab.label}
+            {tab.short}
           </Link>
         ))}
       </nav>

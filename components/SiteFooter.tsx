@@ -5,6 +5,8 @@ export function SiteFooter() {
   return (
     <footer className="site-footer">
       <nav className="footer-links" aria-label="Texte">
+        <Link href="/impressum">Impressum</Link>
+        <Link href="/datenschutz">Datenschutz</Link>
         {LIBRARY.map((item) => (
           <Link key={item.href} href={item.href}>
             {item.title}
@@ -21,7 +23,7 @@ export function SiteFooter() {
         Grün, Blau, Braun, dann 1. und 2. Dan. Vereine können die Prüfungsschwerpunkte anders setzen.
       </p>
       <p>Lehrfilme laufen über YouTube. Der gezeichnete Ablauf darunter ist die Schrittfolge, wenn es keinen einzelnen Film gibt.</p>
-      <p>Ein Konto merkt sich deine Ziele, deinen Gürtel und welche Würfe du schon kannst.</p>
+      <p>Ein Konto merkt sich deine Ziele, deinen Gürtel, deine Häkchen, Punkte, Serie und das Prüfungsdatum.</p>
       <p>
         <a href="/sitemap.xml">XML-Sitemap</a>
         {" · "}

@@ -2,6 +2,7 @@ import { beltById, categoryById } from "@/lib/belts";
 import { neighbors } from "@/lib/catalog";
 import type { Technique } from "@/lib/types";
 import { KnownMark } from "./KnownMark";
+import { SayAloud } from "./SayAloud";
 import { SiteFooter } from "./SiteFooter";
 import { TechniqueFilm } from "./TechniqueFilm";
 import { TechniqueFrame } from "./TechniqueFrame";
@@ -29,6 +30,7 @@ export function TechniqueArticle({ technique }: { technique: Technique }) {
           <span>{technique.jp}</span>
           {technique.kanji && <span className="kanji">{technique.kanji}</span>}
           <span>{technique.group}</span>
+          <SayAloud reading={technique.reading} kanji={technique.kanji} />
         </p>
         {technique.safety && <p className="safety">{technique.safety}</p>}
         {technique.youtube && (

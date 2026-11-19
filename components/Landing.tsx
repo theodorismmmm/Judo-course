@@ -6,15 +6,16 @@ import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import { BELTS } from "@/lib/belts";
 import { LIBRARY } from "@/lib/library";
-import { REVIEWS, SOCIAL } from "@/lib/reviews";
 import { readProfile } from "@/lib/profile";
 import { AccountSlot } from "./AccountSlot";
+import { SiteFooter } from "./SiteFooter";
 
 const ROOMS = [
   { href: "/ueben", index: "01", title: "Übungen", text: "Farbe wählen. Nur der Rang, den du prüfst — Gelb bleibt Gelb." },
-  { href: "/filme", index: "02", title: "Filme", text: "Lehrfilm oder vier gezeichnete Phasen, Name japanisch." },
-  { href: "/workout", index: "03", title: "Workout", text: "Aufwärmen vor dem Judo, mit Matte oder ohne, plus HIIT." },
+  { href: "/sprechen", index: "02", title: "Sprechen", text: "Kurzer Wurf, dann sagst du den japanischen Namen laut." },
+  { href: "/filme", index: "03", title: "Filme", text: "Lehrfilm oder vier gezeichnete Phasen, Name japanisch." },
   { href: "/karten", index: "04", title: "Karten", text: "Beschreibung lesen, den passenden Namen legen." },
+  { href: "/workout", index: "05", title: "Workout", text: "Aufwärmen vor dem Judo, mit Matte oder ohne, plus HIIT." },
 ];
 
 function delay(index: number, step = 70) {
@@ -55,7 +56,6 @@ export function Landing() {
   const roomsRef = useReveal<HTMLElement>();
   const pathRef = useReveal<HTMLElement>();
   const libraryRef = useReveal<HTMLElement>();
-  const reviewsRef = useReveal<HTMLElement>();
 
   useEffect(() => {
     if (!isLoaded || !isSignedIn || !user) return;
@@ -87,8 +87,6 @@ export function Landing() {
     };
   }, []);
 
-  const loop = [...REVIEWS, ...REVIEWS];
-
   return (
     <main id="inhalt" className="landing">
       <div ref={barRef} className="scroll-progress" aria-hidden="true" />
@@ -119,7 +117,12 @@ export function Landing() {
                 Ich habe schon ein Konto
               </Link>
             </div>
-            <p className="social-proof">{SOCIAL.line}</p>
+            <form className="landing-search" action="/suche">
+              <input name="q" aria-label="Technik suchen" placeholder="Seoi" autoComplete="off" />
+              <button className="cta" type="submit">
+                Suchen
+              </button>
+            </form>
           </div>
           <figure className="landing-photo">
             <img ref={photoRef} src="/images/landing-hero.jpg" alt="Zwei Judoka auf der Matte beim Wurf" />
@@ -168,7 +171,7 @@ export function Landing() {
 
         <section ref={libraryRef} className="landing-library reveal" aria-labelledby="landing-library-title">
           <div className="rise-item" style={delay(0)}>
-            <p className="eyebrow">Zum Nachlesen</p>
+            <p className="eyebrow">Sprechen, Plan, Regeln</p>
             <h2 id="landing-library-title">Mehr als die Übungsliste</h2>
           </div>
           <ul className="library-grid">
@@ -182,39 +185,8 @@ export function Landing() {
             ))}
           </ul>
         </section>
-
-        <section ref={reviewsRef} className="reviews reveal" aria-label="Stimmen">
-          <div className="rise-item" style={delay(0)}>
-            <p className="eyebrow">{SOCIAL.users} Judoka</p>
-            <h2>Das sagen Leute, die schon trainieren</h2>
-          </div>
-          <div className="review-marquee" aria-hidden="true">
-            <div className="review-track">
-              {loop.map((review, index) => (
-                <p className="review-chip" key={`${review.name}-${index}`}>
-                  <span>{review.text}</span>
-                  <strong>
-                    {review.name} · {review.belt}
-                  </strong>
-                </p>
-              ))}
-            </div>
-          </div>
-          <div className="review-grid">
-            {REVIEWS.map((review, index) => (
-              <blockquote key={review.name} className="review rise-item" style={delay(index, 55)}>
-                <p>{review.text}</p>
-                <footer>
-                  <strong>{review.name}</strong>
-                  <span>
-                    {review.belt} · {review.place}
-                  </span>
-                </footer>
-              </blockquote>
-            ))}
-          </div>
-        </section>
       </div>
+      <SiteFooter />
     </main>
   );
 }
