@@ -3,7 +3,7 @@ import { SpeakRoom } from "@/components/SpeakRoom";
 
 export const metadata: Metadata = {
   title: "Sprechen",
-  description: "Sieh einen Wurf und sag den japanischen Namen. Die Seite hört zu und lässt ähnliche Schreibweisen gelten.",
+  description: "Sieh den YouTube-Lehrfilm und sag den japanischen Namen. Die Lektion fragt nach dem Mikrofon und gibt XP.",
   alternates: { canonical: "/sprechen" },
 };
 

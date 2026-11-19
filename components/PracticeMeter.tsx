@@ -7,12 +7,12 @@ import { usePractice } from "./usePractice";
 
 export function PracticeMeter({ redirect = "/sprechen" }: { redirect?: string }) {
   const { practice, ready, isSignedIn } = usePractice();
-  if (!ready) return <p className="stat-row">Punkte werden geladen …</p>;
+  if (!ready) return <p className="stat-row">XP werden geladen …</p>;
   const levels = BELTS.filter((belt) => (practice.beltPoints[belt.id] ?? 0) > 0);
   return (
     <div className="stat-block">
       <p className="stat-row">
-        <span>{practice.points} Punkte</span>
+        <span>{practice.points} XP</span>
         <span>{streakLabel(practice)}</span>
         {practice.best > practice.streak && <span>Bestserie {practice.best}</span>}
       </p>

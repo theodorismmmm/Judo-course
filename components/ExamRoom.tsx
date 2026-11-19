@@ -74,7 +74,7 @@ export function ExamRoom({ initialBelt }: { initialBelt?: string | null }) {
     <section className="exam-room" aria-labelledby="probetest-title">
       <h2 id="probetest-title">Probetest</h2>
       <p>
-        Ein Durchgang für eine Gürtelfarbe. Acht Fragen, vier Namen, sechs Punkte für jede richtige Antwort. Am Ende
+        Ein Durchgang für eine Gürtelfarbe. Acht Fragen, vier Namen, sechs XP für jede richtige Antwort. Am Ende
         siehst du, was in diesem Test daneben lag und was du noch nicht abgehakt hast.
       </p>
       <PracticeMeter redirect="/pruefung" />
@@ -103,7 +103,7 @@ export function ExamRoom({ initialBelt }: { initialBelt?: string | null }) {
       ) : finished ? (
         <div className="exam-result">
           <p>
-            {score} von {questions.length} für {belt?.name}. Das sind {score * POINTS_EXAM} Punkte.
+            {score} von {questions.length} für {belt?.name}. Das sind {score * POINTS_EXAM} XP.
           </p>
           {wrong.length > 0 && (
             <>
