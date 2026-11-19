@@ -50,6 +50,8 @@ function useReveal<T extends HTMLElement>() {
 export function Landing() {
   const { isLoaded, isSignedIn, user } = useUser();
   const router = useRouter();
+  const photoRef = useRef<HTMLImageElement>(null);
+  const barRef = useRef<HTMLDivElement>(null);
   const roomsRef = useReveal<HTMLElement>();
   const pathRef = useReveal<HTMLElement>();
   const libraryRef = useReveal<HTMLElement>();
@@ -60,8 +62,33 @@ export function Landing() {
     router.replace(profile.onboarded ? "/ueben" : "/starten");
   }, [isLoaded, isSignedIn, router, user]);
 
+  useEffect(() => {
+    const photo = photoRef.current;
+    const bar = barRef.current;
+    if (!photo || !bar) return;
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduce) return;
+    let frame = 0;
+    const onScroll = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        const y = window.scrollY;
+        const max = document.documentElement.scrollHeight - window.innerHeight;
+        bar.style.transform = `scaleX(${max > 0 ? Math.min(y / max, 1) : 0})`;
+        photo.style.transform = `translateY(${Math.min(y, 520) * 0.08}px) scale(1.06)`;
+      });
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", onScroll);
+    };
+  }, []);
+
   return (
     <main id="inhalt" className="landing">
+      <div ref={barRef} className="scroll-progress" aria-hidden="true" />
       <div className="landing-shell">
         <header className="landing-bar">
           <Link href="/" className="wordmark brand-mark">
@@ -97,7 +124,7 @@ export function Landing() {
             </form>
           </div>
           <figure className="landing-photo">
-            <img src="/images/landing-hero.jpg" alt="Zwei Judoka auf der Matte beim Wurf" />
+            <img ref={photoRef} src="/images/landing-hero.jpg" alt="Zwei Judoka auf der Matte beim Wurf" />
           </figure>
         </section>
 

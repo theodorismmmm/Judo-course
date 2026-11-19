@@ -1,4 +1,4 @@
-const CACHE = "judonow-v5";
+const CACHE = "judonow-v6";
 const PRECACHE = [
   "/",
   "/ueben",
