@@ -4,7 +4,6 @@ import type { Technique } from "@/lib/types";
 import { KnownMark } from "./KnownMark";
 import { SayAloud } from "./SayAloud";
 import { SiteFooter } from "./SiteFooter";
-import { TechniqueFilm } from "./TechniqueFilm";
 import { TechniqueFrame } from "./TechniqueFrame";
 
 export function TechniqueArticle({ technique }: { technique: Technique }) {
@@ -49,13 +48,16 @@ export function TechniqueArticle({ technique }: { technique: Technique }) {
           </figure>
         )}
         <p className="ablauf">Ablauf</p>
-        <TechniqueFilm
-          motion={technique.motion}
-          steps={technique.steps}
-          mirror={technique.mirror}
-          label={technique.reading}
-          mode="player"
-        />
+        <ol className="step-list">
+          {technique.steps.map((step, index) => (
+            <li key={step.phase}>
+              <span>
+                {String(index + 1).padStart(2, "0")} {step.phase}
+              </span>
+              {step.text}
+            </li>
+          ))}
+        </ol>
         <p className="principle">{technique.principle}</p>
         <div className="notes">
           <section>

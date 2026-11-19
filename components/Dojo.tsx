@@ -11,7 +11,6 @@ import { readProfile } from "@/lib/profile";
 import { KnownMark, useKnown } from "./KnownMark";
 import { SiteFooter } from "./SiteFooter";
 import { SiteHeader } from "./SiteHeader";
-import { TechniqueFilm } from "./TechniqueFilm";
 
 function plural(count: number, one: string, many: string) {
   return `${count} ${count === 1 ? one : many}`;
@@ -319,7 +318,7 @@ export function Dojo() {
                             href={`/technik/${technique.slug}?${practiceQuery(belt.id, scope, activeArt)}`}
                             className="card-link"
                           >
-                            {technique.youtube ? (
+                            {technique.youtube && (
                               <span className="thumb" aria-hidden="true">
                                 <img
                                   src={`https://i.ytimg.com/vi/${technique.youtube}/hqdefault.jpg`}
@@ -328,14 +327,6 @@ export function Dojo() {
                                 />
                                 <span className="thumb-play">Film</span>
                               </span>
-                            ) : (
-                              <TechniqueFilm
-                                motion={technique.motion}
-                                steps={technique.steps}
-                                mirror={technique.mirror}
-                                label={technique.reading}
-                                mode="still"
-                              />
                             )}
                             <div className="card-body">
                               <p className="card-index">{String(index + 1).padStart(2, "0")}</p>

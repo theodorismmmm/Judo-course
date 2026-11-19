@@ -90,7 +90,7 @@ export const EXAM_STEPS = [
   },
   {
     title: "Filme ansehen",
-    text: "Jede Technik hat einen Lehrfilm oder einen gezeichneten Ablauf in vier Phasen. Einmal langsam, einmal mit dem Namen laut.",
+    text: "Jede Technik hat einen Lehrfilm oder die vier Schritte als Text. Einmal langsam, einmal mit dem Namen laut.",
   },
   {
     title: "Namen laut sagen",

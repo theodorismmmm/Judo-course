@@ -13,7 +13,7 @@ import { SiteFooter } from "./SiteFooter";
 const ROOMS = [
   { href: "/ueben", index: "01", title: "Übungen", text: "Farbe wählen. Nur der Rang, den du prüfst — Gelb bleibt Gelb." },
   { href: "/sprechen", index: "02", title: "Sprechen", text: "Kurzer Wurf, dann sagst du den japanischen Namen laut." },
-  { href: "/filme", index: "03", title: "Filme", text: "Lehrfilm oder vier gezeichnete Phasen, Name japanisch." },
+  { href: "/filme", index: "03", title: "Filme", text: "Lehrfilme der Reihe nach, Name japanisch." },
   { href: "/karten", index: "04", title: "Karten", text: "Beschreibung lesen, den passenden Namen legen." },
   { href: "/workout", index: "05", title: "Workout", text: "Aufwärmen vor dem Judo, mit Matte oder ohne, plus HIIT." },
 ];

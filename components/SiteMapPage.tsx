@@ -7,7 +7,7 @@ const MAIN = [
   { href: "/", title: "Startseite", text: "Landing mit Login und Einstieg in JudoNOW." },
   { href: "/ueben", title: "Übungen", text: "Gürtel wählen und alle Techniken zum Rang sehen." },
   { href: "/sprechen", title: "Sprechen", text: "Wurf ansehen und den japanischen Namen laut sagen." },
-  { href: "/filme", title: "Filme", text: "Lehrfilme und Bewegungsfilme zu den Übungen." },
+  { href: "/filme", title: "Filme", text: "Lehrfilme zu den Übungen." },
   { href: "/workout", title: "Workout", text: "Aufwärmen vor dem Judo und allgemeine HIIT-Einheiten." },
   { href: "/karten", title: "Karteikarten", text: "Namen und Beschreibungen zuordnen und abhaken." },
   { href: "/suche", title: "Suche", text: "Techniken über alle Gürtel finden." },

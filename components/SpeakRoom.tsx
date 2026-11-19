@@ -8,6 +8,7 @@ import { readProfile } from "@/lib/profile";
 import { applyResult, levelFor, streakLabel, weakSlugs, type Practice } from "@/lib/practice";
 import { matchesAny } from "@/lib/speech";
 import type { BeltId } from "@/lib/types";
+import { QuietFilm } from "./QuietFilm";
 import { SayAloud, speakAloud } from "./SayAloud";
 import { SiteFooter } from "./SiteFooter";
 import { SiteHeader } from "./SiteHeader";
@@ -328,19 +329,7 @@ export function SpeakRoom() {
           <p className="loading">Die Lektion wird gemischt …</p>
         ) : (
           <div className="lesson-card">
-            <figure className="yt lesson-video">
-              <div className="yt-frame">
-                <iframe
-                  key={technique.youtube}
-                  src={`https://www.youtube-nocookie.com/embed/${technique.youtube}?rel=0`}
-                  title="Lehrfilm"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  allowFullScreen
-                  referrerPolicy="strict-origin-when-cross-origin"
-                />
-              </div>
-              <figcaption>Lehrfilm · {technique.videoBy ?? "YouTube"}</figcaption>
-            </figure>
+            {technique.youtube && <QuietFilm key={technique.youtube} id={technique.youtube} />}
             <div className="lesson-body">
               <p className="prompt">Wie heißt dieser Wurf?</p>
               {status === "listening" ? (
