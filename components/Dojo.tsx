@@ -169,7 +169,10 @@ export function Dojo() {
                 <p className="known-line">
                   {accountLoaded && isSignedIn
                     ? `${knownHere} von ${throwsHere.length} Würfen hier schon abgehakt.`
-                    : "Mit einem Konto hakst du die Würfe ab, die du schon kannst."}
+                    : "Mit einem Konto hakst du die Würfe ab, die du schon kannst. Der Stand ist dann auch auf dem anderen Handy da."}{" "}
+                  <Link href="/sprechen">Namen sagen</Link>
+                  {" · "}
+                  <Link href={`/pruefung?gurt=${belt.id}`}>Probetest</Link>
                 </p>
               )}
             </div>
@@ -205,7 +208,7 @@ export function Dojo() {
               <input
                 value={query}
                 onChange={(event) => setQuery(event.target.value)}
-                placeholder="Kesa Gatame, O Soto Gari, Juji Gatame"
+                placeholder="Seoi, Kesa Gatame, O Soto Gari"
               />
             </label>
             <div className="chips" role="toolbar" aria-label="Art der Übung">
@@ -232,6 +235,12 @@ export function Dojo() {
               })}
             </div>
           </div>
+
+          {needle.length >= 2 && (
+            <p className="known-line">
+              <Link href={`/suche?q=${encodeURIComponent(query.trim())}`}>„{query.trim()}“ in allen Gürteln</Link>
+            </p>
+          )}
 
           {lockNote && <p className="lock-note">{lockNote}</p>}
 

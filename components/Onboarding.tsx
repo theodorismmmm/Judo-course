@@ -189,6 +189,7 @@ export function Onboarding() {
                 <li>Lehrfilme zu den Attacken</li>
                 <li>Karteikarten für Namen und Bedeutung</li>
                 <li>Abhaken, welche Würfe du schon kannst</li>
+                <li>Namen laut sagen, mit Mikrofon</li>
               </ul>
             </article>
             <button type="button" className="cta" disabled={pending} onClick={() => setStep("ready")}>

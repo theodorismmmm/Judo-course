@@ -14,7 +14,7 @@ export default function Page() {
     <Guide
       eyebrow="JudoNOW · Texte"
       title="Bibliothek"
-      lead="Sechs Seiten zum Nachlesen. Die Übungen selbst bleiben unter dem Gürtel, die Filme und die Karten."
+      lead="Texte und Werkzeuge. Die Übungen selbst bleiben unter dem Gürtel, die Filme und die Karten."
     >
       <ul className="library-grid">
         {LIBRARY.map((item) => (

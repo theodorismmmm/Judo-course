@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { ExamPlan } from "@/components/ExamPlan";
 import { Guide } from "@/components/Guide";
 import { techniques } from "@/lib/catalog";
 import type { BeltId, CategoryId, Technique } from "@/lib/types";
@@ -73,6 +74,8 @@ export default function Page() {
       title="Wochenpläne"
       lead="Jede Einheit nimmt Techniken, die auf genau diesem Gürtel liegen. Danach der Film oder die vier gezeichneten Phasen, nicht eine neue Liste."
     >
+      <ExamPlan />
+      <h2>Pläne nach Farbe</h2>
       <div className="plan-stack">
         {PLANS.map((plan) => (
           <section key={plan.title} className="plan-card">

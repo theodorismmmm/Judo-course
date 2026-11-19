@@ -1,5 +1,15 @@
 export const LIBRARY = [
   {
+    href: "/sprechen",
+    title: "Sprechen",
+    text: "Kurzer Film, dann sagst du den japanischen Namen. Ähnliche Schreibweisen zählen.",
+  },
+  {
+    href: "/suche",
+    title: "Suche",
+    text: "Seoi eintippen und jeden passenden Wurf sehen, über alle Gürtel.",
+  },
+  {
     href: "/weg",
     title: "Gürtelweg",
     text: "Von Weiß bis 2. Dan: was auf diesem Rang steht, mit Link zu jeder Technik.",
@@ -7,12 +17,22 @@ export const LIBRARY = [
   {
     href: "/plan",
     title: "Wochenpläne",
-    text: "Drei Einheiten pro Rang, gebaut aus den Übungen, die wirklich im Katalog stehen.",
+    text: "Drei Einheiten, und ein Datum, bis zu dem sich der Plan verengt.",
   },
   {
     href: "/pruefung",
     title: "Prüfung",
-    text: "So gehst du die Woche vor dem Gürtel an: Filme, Karten, Abhaken.",
+    text: "Probetest pro Gürtel, mit Punkten und den Techniken, die noch fehlen.",
+  },
+  {
+    href: "/regeln",
+    title: "Wettkampf",
+    text: "Was Ippon, Waza-ari und Shido bedeuten.",
+  },
+  {
+    href: "/trainer",
+    title: "Trainer",
+    text: "Eine Gruppe anlegen und sehen, wie weit die Judoka sind.",
   },
   {
     href: "/glossar",
@@ -71,6 +91,10 @@ export const EXAM_STEPS = [
   {
     title: "Filme ansehen",
     text: "Jede Technik hat einen Lehrfilm oder einen gezeichneten Ablauf in vier Phasen. Einmal langsam, einmal mit dem Namen laut.",
+  },
+  {
+    title: "Namen laut sagen",
+    text: "Unter Sprechen läuft ein kurzer Film. Du sagst den japanischen Namen ins Mikrofon. Liegt die Erkennung daneben, zählt eine ähnliche Schreibweise trotzdem.",
   },
   {
     title: "Karten mischen",

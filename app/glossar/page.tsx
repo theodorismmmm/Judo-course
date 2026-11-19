@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Guide } from "@/components/Guide";
+import { SayAloud } from "@/components/SayAloud";
 import { GLOSSARY } from "@/lib/library";
 
 export const metadata: Metadata = {
@@ -21,6 +22,7 @@ export default function Page() {
             <dt>
               {entry.term}
               <span>{entry.reading}</span>
+              <SayAloud reading={entry.term} kanji={entry.reading} />
             </dt>
             <dd>{entry.text}</dd>
           </div>

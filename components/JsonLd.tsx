@@ -28,7 +28,7 @@ const website = {
     "@type": "SearchAction",
     target: {
       "@type": "EntryPoint",
-      urlTemplate: absoluteUrl("/ueben?q={search_term_string}"),
+      urlTemplate: absoluteUrl("/suche?q={search_term_string}"),
     },
     "query-input": "required name=search_term_string",
   },
